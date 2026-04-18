@@ -6,24 +6,51 @@ A dedicated worker mode (`P` in the launcher menu) that opens a persistent-profi
 
 Some site modules (currently [Mueller](/sites/mueller)) don't finish the order themselves — they select PayPal as payment and return a `paypal.com/checkoutnow?token=...` URL. The PayPal worker picks those URLs off a local queue and clicks through the review screen.
 
-## First run
+## Modes
 
-1. Start the launcher and pick **`P`** from the menu.
-2. Pick a proxy file (residential strongly recommended) — PayPal bans datacenter IPs aggressively. Or press **`D`** for direct (likely to trip risk-engine on new accounts).
-3. Chromium opens at `paypal.com/myaccount/summary` through the chosen proxy.
-4. Log in with your PayPal account.
-5. If PayPal asks for 2FA (SMS / phone), complete it once and leave **"Remember this device"** checked.
-6. The worker prints `[pp] logged in — waiting for pay URLs` and starts tailing the queue.
+After picking `P`, the launcher asks:
 
-The profile (cookies, device-trust token, autofill) is stored at `sessions/pp_profile/` and reused on subsequent runs — no 2FA next time.
+1. **Bundled Chromium** — Playwright spawns its own Chromium, routes through an optional proxy. Convenient but PayPal increasingly flags the bundled browser (login stuck on spinner, "access restricted" interstitial).
+2. **Attach to Chrome** (recommended when (1) gets banned) — you open your normal Chrome with `--remote-debugging-port=9222` and Playwright attaches via CDP. PayPal cannot distinguish this from regular browsing because it *is* regular browsing.
 
-::: warning If the account gets banned
-PayPal sticks bans to (profile cookies + IP + browser fingerprint). To run a **new** account:
+### Mode 1 · Bundled Chromium
+
+1. Pick a proxy file (residential strongly recommended). Or press `D` for direct.
+2. Chromium opens at `paypal.com/myaccount/summary`.
+3. Log in manually. Complete 2FA once and tick **"Remember this device"**.
+4. The worker prints `[pp] logged in — waiting for pay URLs` and starts tailing the queue.
+
+The profile (cookies, device-trust token, autofill) is at `sessions/pp_profile/` and reused on subsequent runs — no 2FA next time.
+
+### Mode 2 · Attach to Chrome (CDP)
+
+One-time setup:
+
+```
+# Windows — close all Chrome windows first, then in cmd/PowerShell:
+"C:\Program Files\Google\Chrome\Application\chrome.exe" ^
+  --remote-debugging-port=9222 ^
+  --user-data-dir=C:\AxgstPPChrome
+```
+
+(Keep a dedicated `--user-data-dir` so this Chrome doesn't interfere with your daily profile.)
+
+In that Chrome window:
+
+1. Log in to PayPal normally. 2FA, remember device, all normal.
+2. Leave the window open.
+
+Back in the launcher: `P` → option `2` → hit Enter to accept default `http://127.0.0.1:9222`. The worker attaches and starts tailing the queue.
+
+Because Playwright never spawns the browser and the CDP connection only sends standard DevTools commands, PayPal sees a completely normal Chrome session.
+
+::: warning If the account gets banned on bundled Chromium
+PayPal sticks bans to (profile cookies + IP + browser fingerprint). To run a **new** account on mode 1:
 1. Delete `sessions/pp_profile/` — forces a fresh browser state
 2. Pick a different residential proxy (one not previously seen on any banned account)
 3. Log in with the new account; complete 2FA; leave "Remember this device" checked
 
-The worker now launches Chromium with a stealth profile (hidden `navigator.webdriver`, `Europe/Berlin` timezone, `de-DE` locale, realistic UA and plugin list, `--disable-blink-features=AutomationControlled`) so PayPal's fingerprint check doesn't flag the session as automation.
+If bundled keeps getting flagged (stuck login spinner, "access restricted" interstitial), switch to **Mode 2 · Attach to Chrome** — it's the nuclear option that works even when bundled is burned.
 :::
 
 ## Day-to-day run
@@ -79,7 +106,10 @@ If PayPal changes the layout, add a new selector to `paypal.py → _pay_one()` a
 |---------|-------------|
 | `Playwright not installed` | Run the two install commands above |
 | Worker reopens to `/signin` every run | Don't skip "Remember this device" — it's what keeps the session across runs |
-| Account banned after login | PayPal linked the profile + IP to a prior ban — delete `sessions/pp_profile/` and use a different residential proxy |
+| Login POST hangs on spinner indefinitely | PayPal flagged the bundled Chromium — switch to Mode 2 (Attach to Chrome) |
+| `Der Zugriff ist vorübergehend eingeschränkt` interstitial | Proxy IP is on PayPal's datacenter blacklist — use a different residential proxy or Mode 2 |
+| Account banned after login | PayPal linked the profile + IP to a prior ban — delete `sessions/pp_profile/`, use a different residential proxy, or switch to Mode 2 |
+| `could not connect to Chrome on :9222` | In Mode 2, start Chrome with `--remote-debugging-port=9222` before picking the option |
 | `Proxy authentication required` at launch | Proxy string missing credentials — use `host:port:user:pass` format |
 | `could not find pay button` | PayPal A/B test with unknown layout — take a screenshot and add the new selector |
 | Order paid twice | Queue file wasn't moved to `pp_done` due to filesystem lock — clear queue dir before relaunch |
