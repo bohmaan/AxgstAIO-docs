@@ -13,3 +13,4 @@
 | [Sportvision](/sites/sportvision) | `sportvision` / `sv` | ✅ | — |
 | [Dfn](/sites/dfn) | `dfn` | ✅ | — |
 | [Fantasiastore](/sites/fantasiastore) | `fantasiastore` / `fa` | ✅ | ✅ |
+| [Mueller](/sites/mueller) | `mueller` / `ml` | ✅ | ✅ |

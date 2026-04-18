@@ -1,0 +1,2 @@
+site;url;mode;qty;max_price;delay_sec;email;password;sizes;country_code;first_name;last_name;street;building_number;postal_code;city;phone
+ml;;register;1;0;0;new@mail.de;NewP4ss1234!;;DE;Hans;Mueller;Musterstrasse;12;10115;Berlin;+4915112345678

@@ -41,6 +41,12 @@ export default defineConfig({
           ],
         },
         {
+          text: 'Payment',
+          items: [
+            { text: 'PayPal auto-checkout', link: '/guide/paypal' },
+          ],
+        },
+        {
           text: 'Help',
           items: [
             { text: 'Troubleshooting', link: '/guide/troubleshooting' },
@@ -63,6 +69,7 @@ export default defineConfig({
             { text: 'Sportvision', link: '/sites/sportvision' },
             { text: 'Dfn', link: '/sites/dfn' },
             { text: 'Fantasiastore', link: '/sites/fantasiastore' },
+            { text: 'Mueller', link: '/sites/mueller' },
           ],
         },
       ],
