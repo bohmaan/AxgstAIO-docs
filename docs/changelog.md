@@ -2,6 +2,14 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.4.2 — Games Island
+
+- New module: **games-island.eu** ([Games Island](/sites/gamesisland)) — JTL-Shop 5 store for TCG / tabletop / board games.
+- Pure-Python solver for **in-Reach CBF** (CapJS WebAssembly PoW) — ~0.15–0.3 s, no browser.
+- Register + auto-saved address + reCAPTCHA v2 via CapSolver.
+- Buy flow with monitor, empik-style price check, 404 retry, ATC retry on OOS / insufficient quantity.
+- Checkout with **Vorkasse / bank transfer** as a single consolidated POST (shipping + payment + final submit in one request).
+
 ## v1.2.1 — Clean log output
 
 - Removed debug prints, entry banners, and PayPal URL from the console (still posted to webhooks).

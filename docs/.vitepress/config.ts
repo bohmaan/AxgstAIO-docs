@@ -64,6 +64,7 @@ export default defineConfig({
             { text: 'Dfn', link: '/sites/dfn' },
             { text: 'Fantasiastore', link: '/sites/fantasiastore' },
             { text: 'Mueller', link: '/sites/mueller' },
+            { text: 'Games Island', link: '/sites/gamesisland' },
           ],
         },
       ],

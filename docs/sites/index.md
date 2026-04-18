@@ -14,3 +14,4 @@
 | [Dfn](/sites/dfn) | `dfn` | ✅ | — |
 | [Fantasiastore](/sites/fantasiastore) | `fantasiastore` / `fa` | ✅ | ✅ |
 | [Mueller](/sites/mueller) | `mueller` / `ml` | ✅ | ✅ |
+| [Games Island](/sites/gamesisland) | `gamesisland` / `gi` | ✅ | ✅ |
