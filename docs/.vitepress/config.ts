@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: 'AxgstAIO',
-  description: 'All-in-one checkout bot for European e-commerce sites',
+  description: 'AxgstAIO documentation',
   base: '/AxgstAIO-docs/',
   lang: 'en-US',
   cleanUrls: true,
@@ -11,9 +11,6 @@ export default defineConfig({
   head: [
     ['link', { rel: 'icon', href: '/AxgstAIO-docs/favicon.svg' }],
     ['meta', { name: 'theme-color', content: '#00d084' }],
-    ['meta', { property: 'og:type', content: 'website' }],
-    ['meta', { property: 'og:title', content: 'AxgstAIO Documentation' }],
-    ['meta', { property: 'og:description', content: 'All-in-one checkout bot for European e-commerce sites' }],
   ],
 
   themeConfig: {
@@ -21,26 +18,17 @@ export default defineConfig({
     siteTitle: 'AxgstAIO',
 
     nav: [
-      { text: 'Guide', link: '/guide/introduction' },
+      { text: 'Guide', link: '/guide/installation' },
       { text: 'Sites', link: '/sites/' },
       { text: 'FAQ', link: '/faq' },
       { text: 'Changelog', link: '/changelog' },
-      {
-        text: 'v1.2.1',
-        items: [
-          { text: 'Changelog', link: '/changelog' },
-          { text: 'GitHub', link: 'https://github.com/bohmaan/AxgstAIO' },
-        ],
-      },
     ],
 
     sidebar: {
       '/guide/': [
         {
-          text: 'Introduction',
+          text: 'Getting Started',
           items: [
-            { text: 'What is AxgstAIO?', link: '/guide/introduction' },
-            { text: 'Quick Start', link: '/guide/quick-start' },
             { text: 'Installation', link: '/guide/installation' },
             { text: 'Updating', link: '/guide/updating' },
           ],
@@ -48,25 +36,22 @@ export default defineConfig({
         {
           text: 'Configuration',
           items: [
-            { text: 'CSV Task Format', link: '/guide/csv-format' },
+            { text: 'Tasks CSV', link: '/guide/csv-format' },
             { text: 'Proxies', link: '/guide/proxies' },
-            { text: 'Webhooks', link: '/guide/webhooks' },
             { text: 'Accounts & Sessions', link: '/guide/accounts' },
           ],
         },
         {
-          text: 'Usage',
+          text: 'Help',
           items: [
-            { text: 'Running tasks', link: '/guide/running' },
-            { text: 'Buy mode', link: '/guide/buy' },
-            { text: 'Register mode', link: '/guide/register' },
             { text: 'Troubleshooting', link: '/guide/troubleshooting' },
+            { text: 'FAQ', link: '/faq' },
           ],
         },
       ],
       '/sites/': [
         {
-          text: 'Supported sites',
+          text: 'Sites',
           items: [
             { text: 'Overview', link: '/sites/' },
             { text: 'Zalando', link: '/sites/zalando' },
@@ -89,8 +74,8 @@ export default defineConfig({
     ],
 
     footer: {
-      message: 'Released under a private license.',
-      copyright: 'Copyright © 2026 AxgstAIO',
+      message: 'Private distribution.',
+      copyright: '© 2026 AxgstAIO',
     },
 
     search: {
@@ -99,7 +84,7 @@ export default defineConfig({
 
     editLink: {
       pattern: 'https://github.com/bohmaan/AxgstAIO-docs/edit/main/docs/:path',
-      text: 'Edit this page on GitHub',
+      text: 'Edit this page',
     },
 
     outline: {

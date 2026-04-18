@@ -8,15 +8,44 @@
   --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #00d084 30%, #0099cc);
 
   --vp-home-hero-image-background-image: linear-gradient(-45deg, #00d084 50%, #0099cc 50%);
-  --vp-home-hero-image-filter: blur(44px);
-}
-
-.VPHero .image-bg {
-  opacity: 0.5;
+  --vp-home-hero-image-filter: blur(56px);
 }
 
 .dark {
   --vp-c-bg: #0b0f14;
   --vp-c-bg-soft: #10151c;
   --vp-c-bg-alt: #0b0f14;
+}
+
+/* Download box — muted card with list of sample files */
+.download-box {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 16px 0 24px 0;
+  background: var(--vp-c-bg-soft);
+}
+
+.download-box ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.download-box li {
+  padding: 2px 0;
+}
+
+.download-box a {
+  font-weight: 500;
+}
+
+/* Subtle table polish */
+.vp-doc table {
+  display: table;
+  width: 100%;
+}
+
+.vp-doc th {
+  font-weight: 600;
+  text-align: left;
 }

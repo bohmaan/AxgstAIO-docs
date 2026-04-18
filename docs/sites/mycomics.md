@@ -1,29 +1,17 @@
 # Mycomics
 
-European comics marketplace. Lightweight catalog, no captcha.
+**Code:** `mycomics` / `mc`
 
-## CSV code
-
-`mycomics` or `mc`
-
-## Regions
+## Region
 
 Ships EU-wide.
 
-## Buy flow
-
-1. Login via session cookie.
-2. Fetch product (HTML page parse).
-3. Add to cart.
-4. Checkout: shipping address + payment.
-5. PayPal URL.
-
-## Recommended CSV row
+## Buy row
 
 ```csv
-mc;https://www.mycomics.com/en/product/xxx;buy;1;100;3;a@a.com;pwd;;EU;<webhook>
+mc;https://www.mycomics.com/en/product/xxx;buy;1;100;3;you@mail.com;P4ss;;EU
 ```
 
 ## Known issues
 
-- **Rare items** go out of stock between probe and ATC — no inventory reservation.
+- Rare items go out of stock between size probe and ATC — no inventory reservation.

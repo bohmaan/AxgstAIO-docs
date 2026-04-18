@@ -1,41 +1,32 @@
 # BasketballEmotion
 
-Spanish basketball apparel site on the Empathy commerce platform. No captcha, no heavy anti-bot.
-
-## CSV code
-
-`basketballemotion` or `be`
+**Code:** `basketballemotion` / `be`
 
 ## Regions
 
-Uses the market segment in the URL path (`/es/`, `/fr/`, ...). Falls back to `/eu/`.
+Market segment in the URL path (`/es/`, `/fr/`, …). Falls back to `/eu/`.
 
-## Search mode (buy)
-
-Short URL field = SKU keyword, passed to Empathy search.
+## Buy row
 
 ```csv
-be;BASKET-SKU-123;buy;1;80;2;c@c.es;pwd;L;ES;
+be;https://www.basketballemotion.com/es/product-slug;buy;1;80;2;you@mail.com;P4ss;L;ES
 ```
 
-## Buy flow
+URL can be a SKU — the bot runs an Empathy search.
 
-1. Login via BESESSID cookie.
-2. Clear cart.
-3. Fetch product by URL or search by SKU.
-4. Add to cart (HTTP form).
-5. 3-step checkout: billing → shipping → payment.
-6. PayPal URL returned.
+## Register row
 
-## Register
-
-POST to `/register` with email, password, accept-TOS. Address added via a separate checkout-address API call.
+```csv
+be;;register;1;0;0;new@mail.com;NewP4ss;Juan;Perez;Calle Gran Via;1;28013;Madrid;ES;+34612345678
+```
 
 ## Known issues
 
-- **`Address not found — creating...`** — account has no saved address. Bot adds it via the checkout flow.
-- **`Waiting for restock`** — no `sizes` available. Update the CSV or wait.
+| Error | Cause |
+|-------|-------|
+| `Address not found — creating...` | Account has no saved address; bot adds it automatically |
+| `Waiting for restock` | No preferred size available |
 
-## Address fix mode
+## Address fix
 
-A rare `addressfix` mode exists to repair accounts where the default address was misconfigured. Set `mode=addressfix` in CSV.
+A rare `mode=addressfix` exists to repair accounts with a misconfigured default address.

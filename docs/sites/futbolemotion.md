@@ -1,27 +1,23 @@
 # FutbolEmotion
 
-Sister site of BasketballEmotion — same Empathy platform, same flow. Football/soccer focused.
+**Code:** `futbolemotion` / `fe`
 
-## CSV code
-
-`futbolemotion` or `fe`
+Sister site of [BasketballEmotion](/sites/basketballemotion) — same Empathy platform, identical flow.
 
 ## Regions
 
-Market segment in URL path (`/es/`, `/fr/`, `/it/`, ...). Defaults to `/eu/`.
+Market segment in the URL path (`/es/`, `/fr/`, `/it/`, …). Falls back to `/eu/`.
 
-## Buy flow
-
-Identical to [BasketballEmotion](/sites/basketballemotion). Most endpoints share the same shape.
-
-## Recommended CSV row
+## Buy row
 
 ```csv
-fe;https://www.futbolemotion.com/es/boots-nike-mercurial;buy;1;150;3;a@a.com;pwd;42;ES;<webhook>
+fe;https://www.futbolemotion.com/es/boots-nike-mercurial;buy;1;150;3;you@mail.com;P4ss;42;ES
 ```
 
-## SKU search
+URL can be a SKU — the bot runs an Empathy search.
+
+## Register row
 
 ```csv
-fe;NIKE-MERC-BLACK;buy;1;150;3;a@a.com;pwd;42;ES;
+fe;;register;1;0;0;new@mail.com;NewP4ss;Juan;Perez;Calle Gran Via;1;28013;Madrid;ES;+34612345678
 ```
