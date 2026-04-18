@@ -9,12 +9,20 @@ Some site modules (currently [Mueller](/sites/mueller)) don't finish the order t
 ## How it runs
 
 1. Launch the tool and pick **`P`**.
-2. A plain Chrome guest window opens at `paypal.com/myaccount/summary` — no proxy, no stealth flags, no persistent profile. Just a fresh guest session.
-3. Log in to PayPal in that window (2FA as usual). Don't worry about "Remember this device" — the session lasts only for this run.
-4. The worker prints `[pp] logged in — waiting for pay URLs` and starts tailing the queue.
-5. Leave the window open; when a task enqueues a pay URL, the worker navigates to it and clicks **Zaplatit / Bezahlen / Pay Now**, then moves the queue file to `pp_done/` (or `pp_failed/` on error).
+2. Pick a proxy from `proxy/` (residential strongly recommended) or **`D`** for direct.
+3. A plain Chrome guest window opens at `paypal.com/myaccount/summary` through the chosen network — no stealth flags, no persistent profile, just a fresh guest session.
+4. Log in to PayPal in that window (2FA as usual). Don't worry about "Remember this device" — the session lasts only for this run.
+5. The worker prints `[pp] logged in — waiting for pay URLs` and starts tailing the queue.
+6. Leave the window open; when a task enqueues a pay URL, the worker navigates to it and clicks **Zaplatit / Bezahlen / Pay Now**, then moves the queue file to `pp_done/` (or `pp_failed/` on error).
 
 Ctrl+C to stop. Next run starts with a fresh guest window and you log in again.
+
+::: warning If your home IP gets banned
+PayPal logs your IP from every failed login attempt. After a few bot-like sessions your real IP gets a 24–72h block (`Der Zugriff ist vorübergehend eingeschränkt`). Workarounds:
+- Pick a residential proxy before the worker starts
+- Or run from a different network (mobile hotspot, different WiFi)
+- Or just wait 24–72h for the block to expire
+:::
 
 ## Day-to-day run
 
