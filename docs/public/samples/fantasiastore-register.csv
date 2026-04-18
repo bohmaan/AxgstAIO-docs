@@ -1,0 +1,2 @@
+site;url;mode;qty;max_price;delay_sec;email;password;sizes;country_code;first_name;last_name;street;building_number;postal_code;city;phone
+fa;;register;1;0;0;new@mail.it;NewP4ss;;IT;Mario;Rossi;Via Roma;12;38121;Trento;+393331112233

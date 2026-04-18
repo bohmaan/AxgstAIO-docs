@@ -12,3 +12,4 @@
 | [Mycomics](/sites/mycomics) | `mycomics` / `mc` | ✅ | — |
 | [Sportvision](/sites/sportvision) | `sportvision` / `sv` | ✅ | — |
 | [Dfn](/sites/dfn) | `dfn` | ✅ | — |
+| [Fantasiastore](/sites/fantasiastore) | `fantasiastore` / `fa` | ✅ | ✅ |

@@ -62,6 +62,7 @@ export default defineConfig({
             { text: 'Mycomics', link: '/sites/mycomics' },
             { text: 'Sportvision', link: '/sites/sportvision' },
             { text: 'Dfn', link: '/sites/dfn' },
+            { text: 'Fantasiastore', link: '/sites/fantasiastore' },
           ],
         },
       ],
