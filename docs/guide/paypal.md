@@ -1,81 +1,74 @@
 # PayPal auto-checkout
 
-A dedicated worker mode (`P` in the launcher menu) that launches your real Chrome (or Edge) with a local Manifest-V3 extension that auto-clicks the pay button for every `paypal.com/checkoutnow?token=...` URL produced by site modules.
+A minimal queue worker (`P` in the launcher menu) that opens every PayPal pay URL produced by a site module in your **default browser**, where you are already logged in. You click `Zaplatit / Pay` once per order — the worker handles the queueing, notifications, and done/failed housekeeping.
 
-## Why this architecture
+## Why not full automation?
 
-PayPal's Arkose detector fingerprints CDP-driven browsers (Playwright, Puppeteer, Selenium) and hangs their sessions on login — even real Chrome launched via `channel="chrome"` gets blocked because Playwright attaches via CDP. The only technique that reliably survives is:
+We tried — thoroughly. Playwright/CDP-driven Chromium, real Chrome via subprocess with an unpacked extension, Firefox, every stealth patch in the book. PayPal's Arkose stack fingerprints all of these within seconds and either blocks the IP, freezes the login, or silently refuses the captcha. Your daily browser is the only thing that reliably gets through because it **is** a real human session.
 
-1. **Launch real Chrome via subprocess** (no Playwright, no CDP attached)
-2. **Load an unpacked extension** that does the clicking — extension content scripts are indistinguishable from regular user interaction (real `isTrusted=true` events, real browser context, real fingerprint)
-3. **Bridge the Python queue to the extension over local HTTP** (background service worker polls `http://127.0.0.1:<ephemeral>/next`)
+So we let the robot do the boring part (watching for orders, opening URLs, bookkeeping) and keep the one thing PayPal actually wants a human for — the final button press.
 
-PayPal sees your daily Chrome with a mundane extension loaded (as if you'd installed a cashback coupon addon). Nothing for Arkose to pattern-match on.
+## Run
 
-## Requirements
+```
+(launcher) > P
+```
 
-- Google Chrome (or Microsoft Edge) installed on the machine. Playwright is **not** required.
-- Override the Chrome path via env var if auto-discovery misses it: `set AXGSTAIO_CHROME="C:\path\to\chrome.exe"` before launching.
+The worker prints:
 
-## First run
+```
+HH:MM:SS [pp] queue:  sessions/pp_queue
+HH:MM:SS [pp] done:   sessions/pp_done
+HH:MM:SS [pp] failed: sessions/pp_failed
+HH:MM:SS [pp] waiting for pay URLs — Ctrl+C to stop
+HH:MM:SS [pp] make sure you're logged in to PayPal in your default browser
+```
 
-1. Start the launcher and pick **`P`**.
-2. Pick a proxy or **`D`** for direct.
-3. The worker:
-   - Generates a fresh MV3 extension at `sessions/pp_extension/`
-   - Starts a tiny HTTP bridge on `127.0.0.1:<random>`
-   - Launches Chrome: `chrome.exe --load-extension=sessions/pp_extension --user-data-dir=sessions/pp_profile https://www.paypal.com/myaccount/summary`
-4. Log in to PayPal in that Chrome window. Complete 2FA once, leave **"Remember this device"** checked. The `sessions/pp_profile/` dir keeps cookies forever.
-5. Leave Chrome open.
+Leave it running. In a **second terminal** run your buy task CSV; every successful order enqueues a pay URL.
 
-The worker's terminal prints `[bridge] handed out ...` when a pay URL gets consumed.
+When a pay URL arrives you'll see:
 
-## Day-to-day run
+```
+  ───────── NEW PAYMENT ─────────
+  site:    mueller
+  order:   #0700123456
+  url:     https://www.paypal.com/checkoutnow?token=...
+  Opening in your default browser — click 'Zaplatit' to pay.
+  Press Enter after you finish paying (or wait 60s to auto-advance).
+```
 
-Open **two terminals**:
-
-| Terminal | Launcher option | What runs |
-|----------|-----------------|-----------|
-| A | `P` | HTTP bridge + real Chrome with extension |
-| B | `1` (or your tasks CSV) | Site modules that produce pay URLs |
-
-Whenever a task writes a pay URL, the extension sees it within ~2s, navigates the active PayPal tab, finds the pay button, clicks, and reports back. Queue file moves to `pp_done/` on success or `pp_failed/` on error.
-
-Ctrl+C in terminal A stops the bridge. Chrome stays open — close it manually when you're done.
+The URL opens in a new tab of your default browser. Click **Zaplatit / Pay**. Back in the terminal, hit Enter (or ignore it — the worker auto-advances after 60s so you can stack multiple orders). The queue file moves to `sessions/pp_done/`.
 
 ## File layout
 
 ```
 sessions/
-├── pp_extension/   auto-generated MV3 extension (manifest.json, background.js, content.js)
-├── pp_profile/     persistent Chrome user-data-dir (cookies, device trust, cache)
-├── pp_queue/       pending pay URLs (one .json per order)
-├── pp_done/        successfully paid orders
-└── pp_failed/      attempts that couldn't find the pay button
+├── pp_queue/    pending pay URLs
+├── pp_done/     processed orders
+└── pp_failed/   malformed / missing URL
 ```
 
-## Proxy support
+Each queue file is `{pay_url, order_id, site, email, queued_at}`. You can drop JSON files into `pp_queue/` by hand to re-queue an order.
 
-The worker accepts proxies in `host:port:user:pass` or `user:pass@host:port` or `scheme://...` form. Chrome's `--proxy-server=` CLI flag does not consume credentials — authenticated proxies will pop a one-time auth dialog you fill in. Unauthenticated or IP-whitelisted proxies plug in seamlessly.
+## Stale queue items
 
-## Pay-button detection
+On startup the worker asks whether to process any leftover files from a previous session:
 
-The content script tries in order:
+```
+Found stale queue item 1776529501234_0700123456.json — process it now? [y/N]:
+```
 
-1. `#one-time-cta` — current PayPal checkout layout
-2. `#payment-submit-btn` — legacy layout
-3. `[data-testid="submit-button-initial"]` / `[data-testid="submitButton-initial"]`
-4. Button text — `Zaplatit`, `Jetzt bezahlen`, `Bezahlen`, `Pay Now`, `Pay`, `Complete Purchase`
+Reply `y` to open it, anything else to skip.
 
-After clicking it waits up to 30s for a redirect away from paypal.com (or a `/success` / `/returnurl` substring) to confirm the payment went through.
+## Auto-advance timeout
+
+The 60-second wait between Enter / next order exists so you can walk away — five orders in a row will each pop up and auto-advance. Tune the value in `paypal.py → _process()` → `timeout = 60.0` if you want more or less time per payment.
 
 ## Troubleshooting
 
 | Symptom | Cause / fix |
 |---------|-------------|
-| `no Chrome/Edge binary found` | Install Chrome, or set `AXGSTAIO_CHROME` env var to the chrome.exe path |
-| Extension didn't load / nothing happens | Go to `chrome://extensions`, enable Developer Mode, verify "AxgstAIO PayPal Worker" is listed and enabled |
-| Pay button never clicks | Pay page layout changed — capture DOM, add the new selector to `_CONTENT_JS` in paypal.py |
-| `pay button never appeared` in `pp_failed` | URL redirected away from `/pay`/`/checkoutnow` (e.g. risk challenge) — queue item moves to failed; retry manually |
-| Proxy prompts for auth every run | Chrome CLI can't consume proxy creds; use an IP-whitelisted residential proxy or enter creds once per session |
-| Two Chrome windows open and extension only works in one | `--user-data-dir` collision with your daily Chrome — use a dedicated `sessions/pp_profile/` (default) and don't override it |
+| Worker prints "NEW PAYMENT" but no browser opens | Your OS has no default browser registered — set one in OS settings, or set `BROWSER` env var |
+| URL opens in the wrong browser (a stale Firefox etc.) | Change default browser in OS settings — the worker uses `webbrowser.open`, which honors your OS default |
+| Browser opens but I'm not logged in to PayPal | Log in once in that browser, check "Remember this device", done |
+| Want to re-run a done order | Move the file from `pp_done/` back to `pp_queue/` and the worker will reopen it |
