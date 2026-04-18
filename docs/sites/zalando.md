@@ -25,17 +25,14 @@ Auto-detected from URL TLD. `country_code` is used only when the URL is empty (r
 zalando;https://www.zalando.cz/example.html;buy;1;3000;3;you@mail.com;P4ss;M,L;CZ
 ```
 
-## Register row
-
-```csv
-zalando;;register;1;0;0;new@mail.com;NewP4ss;Jan;Novak;Konevova;135;13000;Praha;CZ;+420777888999
-```
+::: warning Register not supported
+Zalando register is temporarily disabled. Create accounts manually via the website and add a default address before running buy tasks.
+:::
 
 ## Known issues
 
 | Error | Cause | Fix |
 |-------|-------|-----|
 | `Login failed — Akamai halt` | Proxy flagged | Use residential proxies |
-| `403 elevated-risk-score` (register) | Bad IP reputation | Residential proxies mandatory for register |
-| `Checkout failed — no saved address` | Account has no default address | Register with address columns, or add via site UI |
+| `Checkout failed — no saved address` | Account has no default address | Add one via the Zalando website |
 | `order-token-expired` | Stale checkout version | Retry (auto-refetch in v1.2.0+) |
