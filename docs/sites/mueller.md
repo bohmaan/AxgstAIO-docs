@@ -38,9 +38,7 @@ Mueller requires **8+ chars with upper + lower + digit + symbol**. Weak password
 ## Checkout
 
 - Shipping: **Lieferung nach Hause** (`homedelivery_de`) — currently the only supported mode
-- Payment: **PayPal** — the module places the order and returns a `paypal.com/checkoutnow` URL
-
-When a buy succeeds the pay URL is automatically enqueued for the [PayPal auto-checkout worker](/guide/paypal). If the worker is running in another terminal (menu option `P`), it will click through the PayPal review screen for you.
+- Payment: **PayPal** — the module places the order and returns a `paypal.com/checkoutnow?token=...` URL that you open in your browser to finish paying.
 
 ## Loop mode
 
@@ -50,7 +48,7 @@ When a buy succeeds the pay URL is automatically enqueued for the [PayPal auto-c
 ml;https://www.mueller.de/p/slug-PPN3163472/;loop;1;100;3;you@mail.de;P4ss1234!;;DE
 ```
 
-Login happens once at start; only the buy iteration repeats. Each iteration produces a fresh PayPal URL which gets enqueued.
+Login happens once at start; only the buy iteration repeats. Each iteration prints a fresh PayPal URL.
 
 ## Known issues
 

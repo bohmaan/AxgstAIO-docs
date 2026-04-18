@@ -41,12 +41,6 @@ export default defineConfig({
           ],
         },
         {
-          text: 'Payment',
-          items: [
-            { text: 'PayPal auto-checkout', link: '/guide/paypal' },
-          ],
-        },
-        {
           text: 'Help',
           items: [
             { text: 'Troubleshooting', link: '/guide/troubleshooting' },
