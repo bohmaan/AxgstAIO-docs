@@ -1,4 +1,5 @@
-site;url;mode;qty;max_price;delay_sec;email;password;first_name;last_name;street;building_number;postal_code;city;country_code;phone
-zalando;;register;1;0;0;new@mail.com;NewP4ssword;Jan;Novak;Konevova;135;13000;Praha;CZ;+420777888999
-ss;;register;1;0;0;new@mail.com;NewP4ssword;John;Smith;Baker Street;221;NW16XE;London;GB;+441234567890
-be;;register;1;0;0;new@mail.com;NewP4ssword;Juan;Perez;Calle Gran Via;1;28013;Madrid;ES;+34612345678
+site;url;mode;qty;max_price;delay_sec;email;password;sizes;country_code;first_name;last_name;street;building_number;postal_code;city;phone
+ss;;register;1;0;0;new@mail.com;NewP4ss;;GB;John;Smith;Baker Street;221;NW16XE;London;+441234567890
+be;;register;1;0;0;new@mail.com;NewP4ss;;ES;Juan;Perez;Calle Gran Via;1;28013;Madrid;+34612345678
+fe;;register;1;0;0;new@mail.com;NewP4ss;;ES;Juan;Perez;Calle Gran Via;1;28013;Madrid;+34612345678
+fd;;register;1;0;0;new@mail.com;NewP4ss;;ES;Juan;Perez;Calle Mayor;1;28013;Madrid;+34612345678

@@ -6,6 +6,15 @@
 
 Market segment in the URL path (`/es/`, `/fr/`, …). Falls back to `/eu/`.
 
+## Sample CSVs
+
+<div class="download-box">
+
+- 📄 [basketballemotion-buy.csv](/samples/basketballemotion-buy.csv)
+- 📄 [basketballemotion-register.csv](/samples/basketballemotion-register.csv)
+
+</div>
+
 ## Buy row
 
 ```csv

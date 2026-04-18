@@ -6,6 +6,14 @@
 
 Ships EU-wide. Currency EUR.
 
+## Sample CSV
+
+<div class="download-box">
+
+- 📄 [dfn-buy.csv](/samples/dfn-buy.csv)
+
+</div>
+
 ## Buy row
 
 ```csv

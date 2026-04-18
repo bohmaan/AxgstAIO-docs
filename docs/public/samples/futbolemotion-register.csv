@@ -1,0 +1,2 @@
+site;url;mode;qty;max_price;delay_sec;email;password;sizes;country_code;first_name;last_name;street;building_number;postal_code;city;phone
+fe;;register;1;0;0;new@mail.com;NewP4ss;;ES;Juan;Perez;Calle Gran Via;1;28013;Madrid;+34612345678

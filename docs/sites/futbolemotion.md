@@ -8,6 +8,15 @@ Sister site of [BasketballEmotion](/sites/basketballemotion) — same Empathy pl
 
 Market segment in the URL path (`/es/`, `/fr/`, `/it/`, …). Falls back to `/eu/`.
 
+## Sample CSVs
+
+<div class="download-box">
+
+- 📄 [futbolemotion-buy.csv](/samples/futbolemotion-buy.csv)
+- 📄 [futbolemotion-register.csv](/samples/futbolemotion-register.csv)
+
+</div>
+
 ## Buy row
 
 ```csv

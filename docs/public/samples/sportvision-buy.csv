@@ -1,0 +1,2 @@
+site;url;mode;qty;max_price;delay_sec;email;password;sizes;country_code;first_name;last_name;street;building_number;postal_code;city;phone
+sv;https://www.sportvision.rs/p/product-slug;buy;1;15000;3;you@mail.com;P4ss;42;RS;;;;;;;

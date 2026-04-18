@@ -6,6 +6,14 @@
 
 Ships EU-wide.
 
+## Sample CSV
+
+<div class="download-box">
+
+- 📄 [mycomics-buy.csv](/samples/mycomics-buy.csv)
+
+</div>
+
 ## Buy row
 
 ```csv

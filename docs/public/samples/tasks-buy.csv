@@ -1,5 +1,5 @@
-site;url;mode;qty;max_price;delay_sec;email;password;sizes;country_code
-zalando;https://www.zalando.cz/example-product.html;buy;1;3000;3;you@email.com;YourPa55;M,L;CZ
-ss;https://www.sportsshoes.com/product/xxx;buy;1;200;3;you@email.com;YourPa55;42,43;GB
-be;BASKET-SKU-123;buy;1;80;2;you@email.com;YourPa55;L;ES
-empik;https://www.empik.com/example-product,p1234,ksiazka-p;buy;1;200;3;you@email.com;YourPa55;;PL
+site;url;mode;qty;max_price;delay_sec;email;password;sizes;country_code;first_name;last_name;street;building_number;postal_code;city;phone
+zalando;https://www.zalando.cz/example-product.html;buy;1;3000;3;you@mail.com;P4ss;M,L;CZ;;;;;;;
+ss;https://www.sportsshoes.com/product/xxx;buy;1;200;3;you@mail.com;P4ss;42,43;GB;;;;;;;
+be;BASKET-SKU-123;buy;1;80;2;you@mail.com;P4ss;L;ES;;;;;;;
+empik;https://www.empik.com/example-product,p1234,ksiazka-p;buy;1;200;3;you@mail.com;P4ss;;PL;;;;;;;

@@ -6,6 +6,14 @@
 
 Germany primary. Ships EU-wide.
 
+## Sample CSV
+
+<div class="download-box">
+
+- 📄 [elbenwald-buy.csv](/samples/elbenwald-buy.csv)
+
+</div>
+
 ## Buy row
 
 ```csv

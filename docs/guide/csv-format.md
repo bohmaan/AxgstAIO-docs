@@ -6,12 +6,14 @@ Tasks are defined in a semicolon- or comma-delimited CSV next to the exe (e.g. `
 
 <div class="download-box">
 
-- 📄 [tasks-buy.csv](/samples/tasks-buy.csv) — buy tasks across four sites
+- 📄 [tasks-buy.csv](/samples/tasks-buy.csv) — buy tasks across multiple sites
 - 📄 [tasks-register.csv](/samples/tasks-register.csv) — register with address
 
 </div>
 
-Right-click → Save Link As.
+Right-click → Save Link As. Per-site CSVs are linked from each [Site](/sites/) page.
+
+Samples include **all** supported columns; unused columns stay empty. Unknown columns are ignored, so you can keep one unified header for every CSV.
 
 ## Required columns
 

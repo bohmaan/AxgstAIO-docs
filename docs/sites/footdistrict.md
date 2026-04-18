@@ -6,6 +6,15 @@
 
 Ships across EU + UK. Currency EUR.
 
+## Sample CSVs
+
+<div class="download-box">
+
+- 📄 [footdistrict-buy.csv](/samples/footdistrict-buy.csv)
+- 📄 [footdistrict-register.csv](/samples/footdistrict-register.csv)
+
+</div>
+
 ## Buy row
 
 ```csv

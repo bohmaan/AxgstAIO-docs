@@ -1,0 +1,2 @@
+site;url;mode;qty;max_price;delay_sec;email;password;sizes;country_code;first_name;last_name;street;building_number;postal_code;city;phone
+zalando;https://www.zalando.cz/example-product.html;buy;1;3000;3;you@mail.com;P4ss;M,L;CZ;;;;;;;

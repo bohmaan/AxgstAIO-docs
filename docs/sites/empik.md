@@ -6,6 +6,14 @@
 
 Poland only.
 
+## Sample CSV
+
+<div class="download-box">
+
+- 📄 [empik-buy.csv](/samples/empik-buy.csv)
+
+</div>
+
 ## Buy row
 
 Use semicolon delimiter — Empik URLs contain commas.

@@ -6,6 +6,15 @@
 
 `country_code`: `GB`, `DE`, `FR`, `IT`, `ES`, …
 
+## Sample CSVs
+
+<div class="download-box">
+
+- 📄 [sportsshoes-buy.csv](/samples/sportsshoes-buy.csv)
+- 📄 [sportsshoes-register.csv](/samples/sportsshoes-register.csv)
+
+</div>
+
 ## Buy row
 
 ```csv

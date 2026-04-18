@@ -19,6 +19,14 @@ Auto-detected from URL TLD. `country_code` is used only when the URL is empty (r
 | `.sk` | SK | www.zalando.sk |
 | `.it` | IT | www.zalando.it |
 
+## Sample CSV
+
+<div class="download-box">
+
+- 📄 [zalando-buy.csv](/samples/zalando-buy.csv)
+
+</div>
+
 ## Buy row
 
 ```csv

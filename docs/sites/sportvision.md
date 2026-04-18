@@ -6,6 +6,14 @@
 
 `RS` (dinar) and `HR` (euro).
 
+## Sample CSV
+
+<div class="download-box">
+
+- 📄 [sportvision-buy.csv](/samples/sportvision-buy.csv)
+
+</div>
+
 ## Buy row
 
 ```csv
