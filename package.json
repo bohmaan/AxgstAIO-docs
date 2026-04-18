@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Documentation for AxgstAIO",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
