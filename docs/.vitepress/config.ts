@@ -20,7 +20,6 @@ export default defineConfig({
     nav: [
       { text: 'Guide', link: '/guide/installation' },
       { text: 'Sites', link: '/sites/' },
-      { text: 'FAQ', link: '/faq' },
       { text: 'Changelog', link: '/changelog' },
     ],
 
@@ -45,7 +44,6 @@ export default defineConfig({
           text: 'Help',
           items: [
             { text: 'Troubleshooting', link: '/guide/troubleshooting' },
-            { text: 'FAQ', link: '/faq' },
           ],
         },
       ],
