@@ -9,12 +9,22 @@ Some site modules (currently [Mueller](/sites/mueller)) don't finish the order t
 ## First run
 
 1. Start the launcher and pick **`P`** from the menu.
-2. Chromium opens at `paypal.com/myaccount/summary`.
-3. Log in with your PayPal account.
-4. If PayPal asks for 2FA (SMS / phone), complete it once and leave **"Remember this device"** checked.
-5. The worker prints `[pp] logged in — waiting for pay URLs` and starts tailing the queue.
+2. Pick a proxy file (residential strongly recommended) — PayPal bans datacenter IPs aggressively. Or press **`D`** for direct (likely to trip risk-engine on new accounts).
+3. Chromium opens at `paypal.com/myaccount/summary` through the chosen proxy.
+4. Log in with your PayPal account.
+5. If PayPal asks for 2FA (SMS / phone), complete it once and leave **"Remember this device"** checked.
+6. The worker prints `[pp] logged in — waiting for pay URLs` and starts tailing the queue.
 
 The profile (cookies, device-trust token, autofill) is stored at `sessions/pp_profile/` and reused on subsequent runs — no 2FA next time.
+
+::: warning If the account gets banned
+PayPal sticks bans to (profile cookies + IP + browser fingerprint). To run a **new** account:
+1. Delete `sessions/pp_profile/` — forces a fresh browser state
+2. Pick a different residential proxy (one not previously seen on any banned account)
+3. Log in with the new account; complete 2FA; leave "Remember this device" checked
+
+The worker now launches Chromium with a stealth profile (hidden `navigator.webdriver`, `Europe/Berlin` timezone, `de-DE` locale, realistic UA and plugin list, `--disable-blink-features=AutomationControlled`) so PayPal's fingerprint check doesn't flag the session as automation.
+:::
 
 ## Day-to-day run
 
@@ -69,5 +79,7 @@ If PayPal changes the layout, add a new selector to `paypal.py → _pay_one()` a
 |---------|-------------|
 | `Playwright not installed` | Run the two install commands above |
 | Worker reopens to `/signin` every run | Don't skip "Remember this device" — it's what keeps the session across runs |
+| Account banned after login | PayPal linked the profile + IP to a prior ban — delete `sessions/pp_profile/` and use a different residential proxy |
+| `Proxy authentication required` at launch | Proxy string missing credentials — use `host:port:user:pass` format |
 | `could not find pay button` | PayPal A/B test with unknown layout — take a screenshot and add the new selector |
 | Order paid twice | Queue file wasn't moved to `pp_done` due to filesystem lock — clear queue dir before relaunch |
