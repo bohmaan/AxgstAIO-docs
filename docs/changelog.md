@@ -2,13 +2,16 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
-## v1.4.2 — Games Island
+## v1.4.2 — Games Island + bandwidth savings
 
 - New module: **games-island.eu** ([Games Island](/sites/gamesisland)) — JTL-Shop 5 store for TCG / tabletop / board games.
 - Pure-Python solver for **in-Reach CBF** (CapJS WebAssembly PoW) — ~0.15–0.3 s, no browser.
 - Register + auto-saved address + reCAPTCHA v2 via CapSolver.
 - Buy flow with monitor, empik-style price check, 404 retry, ATC retry on OOS / insufficient quantity.
 - Checkout with **Vorkasse / bank transfer** as a single consolidated POST (shipping + payment + final submit in one request).
+- **Empik monitor**: dropped the full-HTML fallback. Price check now uses REST API → GQL `getBestOffer` only. Per-hour proxy usage during long monitor runs capped at ~2–4 MB instead of spiking to ~480 MB when the REST API was missing price fields.
+- **Empik buy flow**: removed the 50× ATC retry loop. On ATC or checkout failure, task returns to price monitoring instead of re-fetching the product page up to 40 MB worth of times.
+- **BasketballEmotion + FutbolEmotion**: drop-wait loop now uses `HEAD` requests (0-byte body). Full page is fetched once, when the drop actually goes live. ~800× less bandwidth while waiting.
 
 ## v1.2.1 — Clean log output
 
