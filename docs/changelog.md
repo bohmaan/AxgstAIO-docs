@@ -2,7 +2,7 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
-## v1.4.2 — Games Island + bandwidth savings
+## v1.4.3 — Games Island + bandwidth savings
 
 - New module: **games-island.eu** ([Games Island](/sites/gamesisland)) — JTL-Shop 5 store for TCG / tabletop / board games.
 - Pure-Python solver for **in-Reach CBF** (CapJS WebAssembly PoW) — ~0.15–0.3 s, no browser.
