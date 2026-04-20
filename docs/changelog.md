@@ -2,6 +2,14 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.4.4 — Empik monitor rewrite
+
+- Empik price monitor now makes **one** request per tick: a minimal GraphQL `getProduct.bestOffer` query (~170 B response).
+- REST `/api/product` and all HTML fallbacks removed from the monitor — both served multi-hundred-KB CF challenge pages on rate-limit, costing up to 225 MB/h of garbage traffic.
+- On GQL 403/429/503 the session raises and rotates to a fresh proxy via the existing ban handler instead of hammering the banned IP.
+- Product name shown in logs is parsed from the URL slug (no separate name-lookup call).
+- Net: ~450× less monitor bandwidth on long runs.
+
 ## v1.4.3 — Games Island + bandwidth savings
 
 - New module: **games-island.eu** ([Games Island](/sites/gamesisland)) — JTL-Shop 5 store for TCG / tabletop / board games.
