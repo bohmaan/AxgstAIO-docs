@@ -2,6 +2,14 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.4.5 — Elbenwald checkout fix
+
+- **ATC**: added `redirectTo=frontend.detail.page` + `redirectParameters={"productId":...}` — both are required by the Shopware storefront controller. Without them the line item was silently dropped (false-positive 200 OK).
+- **Captcha bypass**: snapshot session cookies before submitting the FriendlyCaptcha solution; restore everything except `datadome` / `ddgl` / `dd_*` / `link11*` after. Link11's response was issuing a fresh guest `session-*` cookie that was wiping the logged-in session — cart appeared empty, checkout redirected to `/checkout/register`.
+- **Checkout**: switched to **PayPal Express** path. One POST to `/paypal/express/create-order` returns the PP token; the approval URL is built directly. Skips `/checkout/confirm` GET + `/checkout/order` POST entirely. 422 on the same call doubles as a cart-empty / OOS signal (caller retries ATC).
+- **Clear cart on start**: fixed `ew_clear_cart` (regex was looking for a non-existent form field) and called once after login — otherwise stale stackable line items accumulated qty across runs and PayPal showed the cumulative quantity.
+- Removed `X-Requested-With: XMLHttpRequest` from ATC POSTs (Shopware sends a different response shape with it).
+
 ## v1.4.4 — Empik monitor rewrite
 
 - Empik price monitor now makes **one** request per tick: a minimal GraphQL `getProduct.bestOffer` query (~170 B response).
