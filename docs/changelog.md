@@ -2,6 +2,17 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.4.6 — catchyourcards.nl module
+
+- New module: **catchyourcards.nl** — Pokémon TCG / One Piece / Lorcana store on WP + WooCommerce + Shoptimizer.
+- Two modes:
+  - `buy` — fast path: `POST /wp-json/wc/store/v1/cart/add-item` (Store API JWT cart) → `POST /wp-json/wc/store/v1/checkout` → Mollie iDEAL redirect URL. ~3-4 s end-to-end.
+  - `test` — probe mode: cycles all 8 ATC variants (REST, 4× wc-ajax, admin-ajax, 2× GET-trick), reports which return non-error responses + which write to JWT vs PHP-session cart. Used to validate which paths survive a real Queue-Fair drop.
+- Transport: nodriver Chrome with the page's woo-shield-plugin signer running natively — `x-bc` / `x-timestamp` / `x-signature` headers added transparently by in-page JS, no reverse engineering of the per-session rotation offset needed.
+- Inline Cloudflare Turnstile clearance (pyautogui-driven checkbox click). Single browser handles CF + transport + cleanup.
+- Proxy support including auth-required proxies via a built-in local asyncio relay (127.0.0.1:N) that injects `Proxy-Authorization` on the way out — Chrome never sees the credentials and never pops up the auth dialog.
+- Both Cart-Token JWT cart and PHP-session cookie cart tracked; final JWT priming step before checkout so the order is created against the populated cart regardless of which ATC method got through.
+
 ## v1.4.5 — Elbenwald checkout fix
 
 - **ATC**: added `redirectTo=frontend.detail.page` + `redirectParameters={"productId":...}` — both are required by the Shopware storefront controller. Without them the line item was silently dropped (false-positive 200 OK).
