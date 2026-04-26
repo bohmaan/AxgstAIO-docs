@@ -65,6 +65,7 @@ export default defineConfig({
             { text: 'Fantasiastore', link: '/sites/fantasiastore' },
             { text: 'Mueller', link: '/sites/mueller' },
             { text: 'Games Island', link: '/sites/gamesisland' },
+            { text: 'CatchYourCards', link: '/sites/catchyourcards' },
           ],
         },
       ],

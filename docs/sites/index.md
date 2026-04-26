@@ -15,3 +15,4 @@
 | [Fantasiastore](/sites/fantasiastore) | `fantasiastore` / `fa` | ✅ | ✅ |
 | [Mueller](/sites/mueller) | `mueller` / `ml` | ✅ | ✅ |
 | [Games Island](/sites/gamesisland) | `gamesisland` / `gi` | ✅ | ✅ |
+| [CatchYourCards](/sites/catchyourcards) | `catchyourcards` / `cyc` | ✅ | — |
