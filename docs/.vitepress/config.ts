@@ -66,6 +66,7 @@ export default defineConfig({
             { text: 'Mueller', link: '/sites/mueller' },
             { text: 'Games Island', link: '/sites/gamesisland' },
             { text: 'CatchYourCards', link: '/sites/catchyourcards' },
+            { text: 'IPZS', link: '/sites/ipzs' },
           ],
         },
       ],

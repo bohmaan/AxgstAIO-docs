@@ -2,6 +2,16 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.4.7 — shop.ipzs.it (IPZS) module
+
+- New module: **shop.ipzs.it** ([IPZS](/sites/ipzs)) — Italian State Mint (Istituto Poligrafico e Zecca dello Stato), numismatic & commemorative coin shop on Magento 2 + F5 BIG-IP ASM, Queue-it gated on hyped drops (collezione, anniversari, edizioni speciali). Buy mode only — register the account manually on the site (Italian-resident form requires `codice fiscale`, IT-only `country_id`, and a Magento image CAPTCHA), then plug the credentials into the CSV.
+- **Request-based Queue-it passage** — no browser. Three-step protocol reverse-engineered live: `POST /spa-api/queue/{customer}/{event}/enqueue` → poll `…/{queue_id}/status` (~1 Hz, body has the queue-it `isClientRedayToRedirect` typo intact) → `GET redirectUrl?queueittoken=…` so Magento's queueit-intercept module Set-Cookies the official `QueueITAccepted-…` signed cookie. Per-task only — cookies live on the curl_cffi session and nowhere else, no file share, no cross-task reuse.
+- **Form-based ATC** at `/checkout/cart/add/uenc/{b64}/product/{id}/`. Confirmation via `/customer/section/load/?sections=cart` + `mage-messages` cookie fallback. POSTs use `allow_redirects=False` so flash errors survive long enough to read — was the root cause of silent "ATC failed / Login failed" diagnostics in the WIP build.
+- **OOS retry loop** — keeps retrying ATC while Magento reports stock gone (`Product that you are trying to add is not available.`, `non disponibile`, `stock for the requested`, …); refetches PDP each cycle for fresh `form_key` + stock state. Non-OOS errors break out immediately so we don't hammer pointlessly. `delay` (CSV column 6) controls retry interval, default 3 s.
+- **Customer Bearer auth** for `/rest/V1/carts/mine/*` checkout (`estimate-shipping-methods` → `shipping-information` → `payment-information`). JWT obtained via `POST /rest/V1/integration/customer/token` after login. The session cookies handle ATC, the bearer handles checkout — Magento on IPZS scopes these endpoints to "customer" auth, not session cookies (returns `401 The consumer isn't authorized to access %resources` without it).
+- **Login fix** — POSTs to `/customer/account/loginPost/` (the visible form) instead of the hidden checkout-mini form's `/login/` URL, which silently 200s without authenticating. The mini form is rendered hidden on the same page and was being matched first by `querySelector('#login-form')`.
+- **Payment** — PayPal Express preferred (`/paypal/express/start/` AJAX returns the token; approval URL posted to webhook + console, same pattern as cyc/Mollie iDEAL & elbenwald/PayPal). Falls back to `braintree_paypal` / `braintree` / `checkmo` if PayPal Express isn't configured for the cart.
+
 ## v1.4.6 — catchyourcards.nl module
 
 - New module: **catchyourcards.nl** — Pokémon TCG / One Piece / Lorcana store on WP + WooCommerce + Shoptimizer.

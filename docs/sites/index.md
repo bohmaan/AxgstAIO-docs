@@ -16,3 +16,4 @@
 | [Mueller](/sites/mueller) | `mueller` / `ml` | ✅ | ✅ |
 | [Games Island](/sites/gamesisland) | `gamesisland` / `gi` | ✅ | ✅ |
 | [CatchYourCards](/sites/catchyourcards) | `catchyourcards` / `cyc` | ✅ | — |
+| [IPZS](/sites/ipzs) | `ipzs` | ✅ | — |
