@@ -67,6 +67,7 @@ export default defineConfig({
             { text: 'Games Island', link: '/sites/gamesisland' },
             { text: 'CatchYourCards', link: '/sites/catchyourcards' },
             { text: 'IPZS', link: '/sites/ipzs' },
+            { text: 'Queue-it (generic)', link: '/sites/queueit' },
           ],
         },
       ],

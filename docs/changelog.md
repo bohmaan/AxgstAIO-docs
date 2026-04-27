@@ -2,6 +2,13 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.4.8 — generic Queue-it pass-through module
+
+- New module: **queueit** (alias `qit`) — site-agnostic [Queue-it](/sites/queueit) solver. CSV column 2 is the queue page URL (`https://{customer}.queue-it.net/?c=…&e=…&t=…&cid=…`); the bot parses customer/event/target/culture from the query string, runs the same enqueue → poll → return-`redirectUrl` flow as the IPZS module, and emits the resulting `https://target/…?queueittoken=…` pass link to the webhook.
+- Pure HTTP — no browser. Works for any Queue-it customer (Supreme drops, Adidas, Ticketmaster, public-sector portals, IPZS) since the SPA-API protocol is shared across all of them.
+- Pass link is short-lived (1–5 min by config); user opens it in a real browser and Queue-it sets the HMAC-signed `QueueITAccepted-…` acceptance cookie on the destination domain.
+- Use this module when the destination site has no AxgstAIO module of its own, or when you want manual checkout in your own browser. For full end-to-end automation through a queued site, prefer the per-site module (e.g. [IPZS](/sites/ipzs)).
+
 ## v1.4.7 — shop.ipzs.it (IPZS) module
 
 - New module: **shop.ipzs.it** ([IPZS](/sites/ipzs)) — Italian State Mint (Istituto Poligrafico e Zecca dello Stato), numismatic & commemorative coin shop on Magento 2 + F5 BIG-IP ASM, Queue-it gated on hyped drops (collezione, anniversari, edizioni speciali). Buy mode only — register the account manually on the site (Italian-resident form requires `codice fiscale`, IT-only `country_id`, and a Magento image CAPTCHA), then plug the credentials into the CSV.
