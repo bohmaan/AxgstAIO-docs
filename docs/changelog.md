@@ -2,6 +2,12 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.5.0 — Elbenwald register mode
+
+- New `register` mode for [Elbenwald](/sites/elbenwald) — pure HTTP, no browser. Posts to `/account/register` with billing address; the form's hidden reCAPTCHA v3 token is solved via CapSolver.
+- Removed the legacy Selenium-based register path (no more `undetected-chromedriver` / Chrome dependency for Elbenwald registration).
+- CapSolver fallback for FriendlyCaptcha (login / ATC) **removed** — only the local pure-Python BLAKE2B PoW solver from v1.4.9 is used now. CapSolver is still required for register-time reCAPTCHA v3.
+
 ## v1.4.9 — local FriendlyCaptcha solver (Elbenwald)
 
 - Elbenwald's FriendlyCaptcha is now solved **locally** in pure Python (~0.1-0.7s on a modern CPU) instead of through the CapSolver API (~3-5s + per-solve cost).

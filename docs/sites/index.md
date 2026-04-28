@@ -7,7 +7,7 @@
 | [BasketballEmotion](/sites/basketballemotion) | `basketballemotion` / `be` | ✅ | ✅ |
 | [FutbolEmotion](/sites/futbolemotion) | `futbolemotion` / `fe` | ✅ | ✅ |
 | [Empik](/sites/empik) | `empik` | ✅ | ✅ |
-| [Elbenwald](/sites/elbenwald) | `elbenwald` / `ew` | ✅ | — |
+| [Elbenwald](/sites/elbenwald) | `elbenwald` / `ew` | ✅ | ✅ |
 | [FootDistrict](/sites/footdistrict) | `footdistrict` / `fd` | ✅ | ✅ |
 | [Mycomics](/sites/mycomics) | `mycomics` / `mc` | ✅ | — |
 | [Sportvision](/sites/sportvision) | `sportvision` / `sv` | ✅ | — |
