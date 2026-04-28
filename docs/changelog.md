@@ -2,6 +2,12 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.4.9 — local FriendlyCaptcha solver (Elbenwald)
+
+- Elbenwald's FriendlyCaptcha is now solved **locally** in pure Python (~0.1-0.7s on a modern CPU) instead of through the CapSolver API (~3-5s + per-solve cost).
+- CapSolver stays as a fallback in case a site rolls to FriendlyCaptcha v2 (which uses a different protocol the local solver doesn't support yet).
+- No CSV / config changes needed — drop-in.
+
 ## v1.4.8 — generic Queue-it pass-through module
 
 - New module: **queueit** (alias `qit`) — site-agnostic [Queue-it](/sites/queueit) solver. Paste any `*.queue-it.net` queue page URL into the CSV and the bot waits in the queue, then sends the resulting **pass link** to the webhook. Open it in a real browser within ~1-5 min and you're past the queue.
