@@ -2,6 +2,10 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.5.4 — Pagro restored-session cart self-heal
+
+- Fix: restored sessions whose server-side quote was garbage-collected by Magento (typical after long idle) now auto-recover. ATC catches the `Current customer does not have an active cart` response, calls `POST /rest/V1/carts/mine` to create a fresh quote, and retries once. No extra request on the happy path.
+
 ## v1.5.3 — Skatedeluxe module (CC + bank transfer + register)
 
 - New module: **skatedeluxe.com** ([Skatedeluxe](/sites/skatedeluxe)) — DE-based skate shop with `/api2/*` JSON backend.
