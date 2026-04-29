@@ -17,4 +17,5 @@
 | [Games Island](/sites/gamesisland) | `gamesisland` / `gi` | ✅ | ✅ |
 | [CatchYourCards](/sites/catchyourcards) | `catchyourcards` / `cyc` | ✅ | — |
 | [IPZS](/sites/ipzs) | `ipzs` | ✅ | — |
+| [Pagro](/sites/pagro) | `pagro` / `pg` | ✅ | ✅ |
 | [Queue-it (generic)](/sites/queueit) | `qit` / `queueit` | pass-only | — |

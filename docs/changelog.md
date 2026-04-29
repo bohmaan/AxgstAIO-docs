@@ -2,6 +2,14 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.5.1 — Pagro module
+
+- New module: **pagro.at** ([Pagro](/sites/pagro)) — Austrian Magento 2 storefront. Buy + register modes.
+- Cloudflare managed challenge solved once per task using headless Chrome (patchright preferred, playwright fallback) — clearance reused for the rest of the run.
+- **Global cap of 5 concurrent CF solves** so a large task fleet doesn't overload a small VPS. Tasks past the limit wait their turn.
+- OOS retry loop — refetches PDP each tick to catch live restocks during a drop.
+- ATC then posts the cart URL to the webhook for manual checkout.
+
 ## v1.5.0 — Elbenwald register mode
 
 - New `register` mode for [Elbenwald](/sites/elbenwald) — pure HTTP, no browser. Posts to `/account/register` with billing address; the form's hidden reCAPTCHA v3 token is solved via CapSolver.
