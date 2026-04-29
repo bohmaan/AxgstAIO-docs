@@ -1,0 +1,2 @@
+site;url;mode;qty;max_price;delay_sec;email;password;sizes;country_code;card_number;card_exp;card_cvv
+sd;https://www.skatedeluxe.com/en/p/<slug>_p<id>;buy;1;100;3;you@mail.com;YourPassword;;CZ;4242424242424242;12/27;123

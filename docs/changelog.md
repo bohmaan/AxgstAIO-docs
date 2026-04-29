@@ -2,6 +2,15 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.5.3 — Skatedeluxe module (CC + bank transfer + register)
+
+- New module: **skatedeluxe.com** ([Skatedeluxe](/sites/skatedeluxe)) — DE-based skate shop with `/api2/*` JSON backend.
+- **`buy` mode** — Stripe credit-card checkout via direct `api.stripe.com/v1/payment_methods` tokenization (no Stripe.js iframe). Card brand auto-detected from CSV `card_number`.
+- **`bank` mode** — bank-transfer (Vorkasse / moneyorder). DE addresses only.
+- **`register` mode** — creates the account via `/api2/auth` (Cloudflare Turnstile solved with CapSolver) and saves the CSV address as the customer's default in one go, so subsequent buys skip the address step.
+- Persistent login session (24h TTL) — second buy on the same account skips login entirely.
+- All-REST `/api2/*` ATC + tiny Range-limited PDP scrape; no full HTML page downloads.
+
 ## v1.5.2 — Pagro speedups + Saferpay PaymentPage discovery
 
 - Confirmed Saferpay redirect endpoint: `POST /rest/V1/carts/mine/saferpay/payment/paymentpageinitialization` returns the `https://www.saferpay.com/VT2/mpp/PaymentSelection/Index/<token>` URL directly. Replaces the earlier guess-based fallback chain (REST V1 order → 5 candidate redirect endpoints → success page scrape).

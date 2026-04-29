@@ -1,0 +1,2 @@
+site;url;mode;qty;max_price;delay_sec;email;password;sizes;country_code
+sd;https://www.skatedeluxe.com/en/p/<slug>_p<id>;bank;1;100;3;you@mail.de;YourPassword;;DE
