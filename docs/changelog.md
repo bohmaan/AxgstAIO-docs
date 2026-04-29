@@ -2,13 +2,16 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
-## v1.5.1 — Pagro module
+## v1.5.1 — Pagro module (Magento 2 + Saferpay)
 
 - New module: **pagro.at** ([Pagro](/sites/pagro)) — Austrian Magento 2 storefront. Buy + register modes.
-- Cloudflare managed challenge solved once per task using headless Chrome (patchright preferred, playwright fallback) — clearance reused for the rest of the run.
+- End-to-end Saferpay PaymentPage checkout — bot places the order via REST V1, fetches the Saferpay hosted-page URL, posts it to the webhook for the user to complete the card payment.
+- Auto-detects card brand from CSV `card_number` and selects matching `saferpay_visa` / `saferpay_mastercard` method.
+- Cloudflare interactive Turnstile solved via `cf_solver` (nodriver + pyautogui) — auth proxies supported through a local Proxy-Authorization forwarder, no extension needed.
 - **Global cap of 5 concurrent CF solves** so a large task fleet doesn't overload a small VPS. Tasks past the limit wait their turn.
-- OOS retry loop — refetches PDP each tick to catch live restocks during a drop.
-- ATC then posts the cart URL to the webhook for manual checkout.
+- Persistent login session (~6h TTL) — second buy skips CF solve + login entirely.
+- All-REST-V1 buy flow — no HTML PDP fetch, no form_key / uenc dance, no section/load polls. Single `cartItems` POST handles ATC + OOS detection.
+- OOS retry loop — Magento returns a clear "out of stock" message; bot retries at CSV `delay` until the item is back.
 
 ## v1.5.0 — Elbenwald register mode
 
