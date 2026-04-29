@@ -2,6 +2,15 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.5.2 — Pagro speedups + Saferpay PaymentPage discovery
+
+- Confirmed Saferpay redirect endpoint: `POST /rest/V1/carts/mine/saferpay/payment/paymentpageinitialization` returns the `https://www.saferpay.com/VT2/mpp/PaymentSelection/Index/<token>` URL directly. Replaces the earlier guess-based fallback chain (REST V1 order → 5 candidate redirect endpoints → success page scrape).
+- All-REST-V1 buy flow — no HTML PDP fetch, no form-based ATC, no form_key cookie dedupe. Single `POST /rest/V1/carts/mine/items` with `{cartItem: {sku, qty}}` does add-to-cart and surfaces OOS via Magento's 400 message.
+- SKU is extracted from the URL slug (`...-<digits>.html`) — works for any pagro listing without per-product config.
+- Persistent login session (`~/.axgst/sessions/pagro_<hash>.json`, ~6h TTL): subsequent buys skip the CF solve + login entirely. Cached shipping carrier/method also persists, saving the `estimate-shipping-methods` call on the second+ buy.
+- Auto-detects card brand from `card_number` (Visa / Mastercard) and selects the matching `saferpay_visa` / `saferpay_mastercard` method.
+- Default request timeout 30s, 4 retries with capped backoff. Connection errors print a single retry line per attempt.
+
 ## v1.5.1 — Pagro module (Magento 2 + Saferpay)
 
 - New module: **pagro.at** ([Pagro](/sites/pagro)) — Austrian Magento 2 storefront. Buy + register modes.
