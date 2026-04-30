@@ -2,6 +2,10 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.6.3 — Skatedeluxe save-address: tolerate missing CSV `date_of_birth`
+
+- Fix: `do_sd_register` crashed with `AttributeError: 'Task' object has no attribute 'date_of_birth'` after a successful register, because the Task dataclass has no such field. The address-save path now uses `getattr(task, "date_of_birth", "")` and falls back to the `1990-01-15` placeholder, so older CSVs without the column work as before.
+
 ## v1.6.2 — Skatedeluxe register endpoint: /api2/auth → /api2/customer
 
 - Skatedeluxe split register off from `/api2/auth` (now login-only, returns `404 No matching account found` for new emails). Register moved to dedicated `POST /api2/customer` with the same JSON body shape (`email, password, firstname, newsletter, premiumclub, connectOrder, captcha`). Bot updated.
