@@ -2,6 +2,10 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.6.2 — Skatedeluxe register endpoint: /api2/auth → /api2/customer
+
+- Skatedeluxe split register off from `/api2/auth` (now login-only, returns `404 No matching account found` for new emails). Register moved to dedicated `POST /api2/customer` with the same JSON body shape (`email, password, firstname, newsletter, premiumclub, connectOrder, captcha`). Bot updated.
+
 ## v1.6.1 — Skatedeluxe register: Turnstile → reCAPTCHA v2
 
 - Skatedeluxe migrated their register-time captcha from Cloudflare Turnstile to **invisible reCAPTCHA v2**. Bot now reads the sitekey from the `data-recaptcha` container on /en/login (was `data-sitekey="0x..."`) and solves via CapSolver `ReCaptchaV2TaskProxyLess` with `isInvisible: true`. Body field name unchanged (`captcha`), so the upstream `/api2/auth` register call works without further tweaks once the right token is supplied.
