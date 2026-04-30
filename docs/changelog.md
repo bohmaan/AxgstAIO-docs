@@ -2,6 +2,16 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.6.0 — Footshop module (COD home delivery + Prague pickup + register)
+
+- New module: **footshop.cz** + **footshop.eu** ([Footshop](/sites/footshop)) — Czech / EU sneaker store, single GraphQL backend at `/<lang>/graphql/`. Two domains share the same module — CSV `country_code` selects: `CZ` → CZK / `www.footshop.cz`, anything else → EUR / `www.footshop.eu`.
+- **`buy` mode** — home delivery via GLS courier, **Dobírka (cash on delivery)** payment. Uses `selectedDeliveryAddress` for accounts that already have a saved address (set automatically by the server on first checkout), so subsequent buys skip the address form.
+- **`pickup` mode** — Prague store pickup (Footshop Praha — Na Příkopě, fallback QNS Store 28. října). Same flow as `buy`, just a different carrier picker.
+- **`register` mode** — pure-JSON GraphQL `Registration` mutation. Address is NOT submitted at register; the server stores it from the first `buy`/`pickup` checkout and the bot reuses the customer-saved address for subsequent runs.
+- Anti-bot: none observed. Cloudflare only routes (no Akamai / Datadome / PX / Turnstile). `curl_cffi chrome146` impersonation is enough.
+- Persistent login session (~6h TTL) in `~/.axgst/sessions/footshop_<hash>.json`.
+- Single home GET + single PDP HTML scrape (server-rendered availability JSON gives all sizes + variant ids in one shot); everything else is GraphQL POSTs.
+
 ## v1.5.4 — Pagro restored-session cart self-heal
 
 - Fix: restored sessions whose server-side quote was garbage-collected by Magento (typical after long idle) now auto-recover. ATC catches the `Current customer does not have an active cart` response, calls `POST /rest/V1/carts/mine` to create a fresh quote, and retries once. No extra request on the happy path.

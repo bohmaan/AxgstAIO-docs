@@ -19,4 +19,5 @@
 | [IPZS](/sites/ipzs) | `ipzs` | ✅ | — |
 | [Pagro](/sites/pagro) | `pagro` / `pg` | ✅ | ✅ |
 | [Skatedeluxe](/sites/skatedeluxe) | `skatedeluxe` / `sd` | ✅ (CC + bank) | ✅ |
+| [Footshop](/sites/footshop) | `footshop` / `fs` | ✅ (COD + pickup) | ✅ |
 | [Queue-it (generic)](/sites/queueit) | `qit` / `queueit` | pass-only | — |
