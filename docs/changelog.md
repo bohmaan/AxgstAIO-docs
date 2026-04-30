@@ -2,6 +2,10 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.6.1 — Skatedeluxe register: Turnstile → reCAPTCHA v2
+
+- Skatedeluxe migrated their register-time captcha from Cloudflare Turnstile to **invisible reCAPTCHA v2**. Bot now reads the sitekey from the `data-recaptcha` container on /en/login (was `data-sitekey="0x..."`) and solves via CapSolver `ReCaptchaV2TaskProxyLess` with `isInvisible: true`. Body field name unchanged (`captcha`), so the upstream `/api2/auth` register call works without further tweaks once the right token is supplied.
+
 ## v1.6.0 — Footshop module (COD home delivery + Prague pickup + register)
 
 - New module: **footshop.cz** + **footshop.eu** ([Footshop](/sites/footshop)) — Czech / EU sneaker store, single GraphQL backend at `/<lang>/graphql/`. Two domains share the same module — CSV `country_code` selects: `CZ` → CZK / `www.footshop.cz`, anything else → EUR / `www.footshop.eu`.
