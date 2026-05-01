@@ -54,6 +54,7 @@ export default defineConfig({
             { text: 'Overview', link: '/sites/' },
             { text: 'BasketballEmotion', link: '/sites/basketballemotion' },
             { text: 'CatchYourCards', link: '/sites/catchyourcards' },
+            { text: 'Colorskates', link: '/sites/colorskates' },
             { text: 'Dfn', link: '/sites/dfn' },
             { text: 'Elbenwald', link: '/sites/elbenwald' },
             { text: 'Empik', link: '/sites/empik' },

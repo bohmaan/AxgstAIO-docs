@@ -45,7 +45,6 @@ Accepted formats:
 
 | Error | Cause |
 |-------|-------|
-| `Could not pass Cloudflare` | nodriver / pyautogui not installed. Run `python -m pip install nodriver pyautogui websockets`. |
-| `cf_solver error: maximum recursion depth` | nodriver 0.48 bug on Python 3.14. Pin: `pip install --force-reinstall "nodriver==0.46"`. |
-| `wc_order_limiter_rate_limit_exceeded` | WordPress plugin blocking rapid repeat orders. Wait ~15 min or rotate email/IP. |
-| `URL redirects → product likely removed` | Product was unpublished after a drop. Use a live URL or a numeric ID known pre-drop. |
+| `Could not pass Cloudflare` | The bot needs a visible display to clear Cloudflare. On a headless server, run under a virtual display (`xvfb-run` on Linux). |
+| `wc_order_limiter_rate_limit_exceeded` | The shop is rate-limiting repeat orders from the same account/IP. Wait ~15 min or rotate email/proxy. |
+| `URL redirects → product likely removed` | Product was unpublished after a drop. Use a live URL or a numeric product ID known pre-drop. |

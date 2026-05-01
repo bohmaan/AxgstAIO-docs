@@ -16,6 +16,7 @@
 | [Mueller](/sites/mueller) | `mueller` / `ml` | ✅ | ✅ |
 | [Games Island](/sites/gamesisland) | `gamesisland` / `gi` | ✅ | ✅ |
 | [CatchYourCards](/sites/catchyourcards) | `catchyourcards` / `cyc` | ✅ | — |
+| [Colorskates](/sites/colorskates) | `colorskates` / `cs` | ✅ | ✅ |
 | [IPZS](/sites/ipzs) | `ipzs` | ✅ | — |
 | [Pagro](/sites/pagro) | `pagro` / `pg` | ✅ | ✅ |
 | [Skatedeluxe](/sites/skatedeluxe) | `skatedeluxe` / `sd` | ✅ (CC + bank) | ✅ |

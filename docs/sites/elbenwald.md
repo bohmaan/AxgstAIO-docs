@@ -27,7 +27,7 @@ ew;https://www.elbenwald.de/product-slug;buy;1;60;3;you@mail.de;P4ss;L;DE
 ew;;register;1;0;0;new@mail.de;NewP4ss;;DE;Hans;Mueller;Hauptstrasse;12;10115;Berlin;+4915112345678
 ```
 
-Pure HTTP register — no browser, no Selenium. The form's hidden reCAPTCHA v3 field is solved via CapSolver (`CAPSOLVER_KEY` from `config.ini`).
+Register requires a CapSolver key configured in `config.ini` for the reCAPTCHA v3 step.
 
 ::: tip Country support
 Currently mapped: DE / AT / CH / BE / BG / DK / EE / FI / FR / AU. For other countries the bot falls back to DE.

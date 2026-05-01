@@ -24,7 +24,7 @@ DE primary, ships across EU.
 sd;<pdp-url>;buy;1;100;3;you@mail.com;YourPassword;;CZ;4242424242424242;12/27;123
 ```
 
-Uses Stripe `payment_methods` API directly with the merchant's publishable key (no Stripe.js, pure HTTP). Card brand is auto-detected; `card_number`/`card_exp`/`card_cvv` columns required. Works for any country where Stripe is offered.
+Pays via Stripe in-line — no extra browser step. Card brand is auto-detected; `card_number` / `card_exp` / `card_cvv` columns are required. Works for any country where skatedeluxe ships and offers card payment.
 
 ### `bank` — bank transfer (Vorkasse)
 
@@ -40,18 +40,12 @@ Selects `moneyorder` payment. **Only available for DE addresses** — skatedelux
 sd;;register;1;0;0;new@mail.de;NewP4ss;DE;Hans;Mueller;Hauptstrasse;1;10115;Berlin;+4915112345678;1990-06-15
 ```
 
-Pure JSON register via `/api2/auth` (Cloudflare Turnstile solved with CapSolver). Right after the account is created the bot saves the address from the CSV as the customer's **default**, so subsequent `buy` / `bank` runs go straight to checkout — no per-purchase address re-entry.
+The bot creates the account, then saves the CSV address as the customer's **default** in one go — so any later `buy` / `bank` run on the same account goes straight to checkout without re-entering the address. Register requires an invisible reCAPTCHA solve (CapSolver key in `config.ini`).
 
-## Performance
+## Notes
 
-- Single small HTML scrape per session to grab the CSRF token — everything else is JSON
-- Persistent login session (24h TTL) in `~/.axgst/sessions/sd_<hash>.json`
-- 200KB Range header on the PDP fetch to avoid downloading full 1MB+ pages
-- Stripe tokenization is direct HTTP to `api.stripe.com/v1/payment_methods` — no Stripe.js iframe
-
-## Anti-bot
-
-None observed for login/buy. Cloudflare Turnstile only on registration.
+- Login is cached for ~24h — second buy on the same account skips the login step.
+- Captcha is only needed for register. Buy and bank-transfer runs don't touch CapSolver.
 
 ## Known issues
 

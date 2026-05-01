@@ -29,10 +29,10 @@ fa;;register;1;0;0;new@mail.it;NewP4ss;;IT;Mario;Rossi;Via Roma;12;38121;Trento;
 
 ## Checkout
 
-- Shipping: **BRT** (carrier 259)
-- Payment: **Bonifico bancario** (`ps_wirepayment`)
+- Shipping: **BRT** courier
+- Payment: **Bonifico bancario** (bank transfer)
 
-The `city` field should match the Italian province name (e.g. `Trento`, `Roma`, `Milano`) — the module maps it to the numeric PrestaShop `id_state`. All 110 provinces supported.
+The `city` field should match the Italian province name (e.g. `Trento`, `Roma`, `Milano`). All 110 Italian provinces are supported.
 
 ## Loop mode
 

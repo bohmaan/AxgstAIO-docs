@@ -1,12 +1,8 @@
 # Footshop
 
-**Code:** `footshop` / `fs`
+**Codes:** `footshop` / `fs`
 
-## Region
-
-CZ (CZK) and EU (EUR). The CSV `country_code` selects the storefront — `CZ` routes to `www.footshop.cz/cs/`, anything else to `www.footshop.eu/en/`.
-
-Both domains share a single GraphQL backend at `/<lang>/graphql/` — login, ATC, and checkout all run through it.
+Covers both `footshop.cz` (CZK) and `footshop.eu` (EUR). The CSV `country_code` decides — `CZ` routes to the Czech storefront, anything else to the EU one.
 
 ## Sample CSVs
 
@@ -20,21 +16,21 @@ Both domains share a single GraphQL backend at `/<lang>/graphql/` — login, ATC
 
 ## Modes
 
-### `buy` — home delivery, COD payment
+### `buy` — home delivery, cash on delivery
 
 ```csv
 fs;<pdp-url>;buy;1;5000;3;you@mail.com;YourPassword;42;CZ
 ```
 
-Logs in (or restores cached session), parses sizes from the PDP HTML, ATCs the matching variant, runs the GraphQL checkout flow with **GLS courier + Dobírka (cash on delivery)**. The CSV `sizes` column accepts a single EU/US/UK value (auto-detected) or a comma-separated list with first-match-in-stock priority.
+GLS courier, **Dobírka (cash on delivery)** at the door. The `sizes` column accepts a single value (EU/US/UK auto-detected) or a comma-separated list — first match in stock wins.
 
-### `pickup` — Prague store pickup, COD payment
+### `pickup` — Prague store pickup, cash on delivery
 
 ```csv
 fs;<pdp-url>;pickup;1;5000;3;you@mail.com;YourPassword;42;CZ
 ```
 
-Same flow as `buy` but the carrier is set to **Footshop Praha — Na Příkopě** (fallback **QNS Store 28. října**). No address-side step matters — the parcel waits in-store. Address from the CSV is still required for contact/notify.
+Same as `buy`, but the parcel waits at **Footshop Praha — Na Příkopě** (fallback **QNS Store 28. října**). The address from the CSV is still required for contact info.
 
 ### `register` — create an account
 
@@ -42,21 +38,10 @@ Same flow as `buy` but the carrier is set to **Footshop Praha — Na Příkopě*
 fs;;register;1;0;0;new@mail.com;NewP4ss;CZ;Jan;Novak;Hlavni;12;11000;Praha;+420777123456
 ```
 
-Pure-JSON GraphQL register via the `Registration` mutation. Address from the CSV is **NOT** sent at this step — the server stores it automatically on the customer's first checkout (so the next `buy` run reuses it via `selectedDeliveryAddress`, skipping the form).
+The address from the CSV is **not** sent at register — Footshop saves it automatically on the customer's first checkout. The next `buy` on the same account skips the address form.
 
-## Performance
+## Notes
 
-- One small home GET to obtain the PrestaShop session cookie
-- One PDP HTML scrape (server-rendered availability JSON, gives all sizes + variant ids in one shot)
-- All other operations are GraphQL POSTs to `/cs/graphql/` (or `/en/graphql/`)
-- Persistent login session (~6h TTL) in `~/.axgst/sessions/footshop_<hash>.json`
-- Saved address auto-detected from `viewer.addresses` — second buy on the same account skips the address form entirely
-
-## Anti-bot
-
-None observed. Cloudflare just routes; no Akamai, Datadome, PerimeterX, or Turnstile gating. `curl_cffi chrome146` impersonation is enough.
-
-## Known issues
-
-- Carrier list varies by `country_code`. The bot prefers GLS first, falls back to the first non-pickup carrier in the response. If your country has no GLS or COD-compatible carrier, the run aborts with `COD not available (have: ...)`.
-- COD is the only mapped payment. PayPal / card via Adyen are not in scope.
+- Login is cached for ~6h — repeated buys on the same account skip the login step.
+- Carriers depend on `country_code`. The bot prefers GLS; if your country has no GLS or COD-compatible carrier, the run aborts with `COD not available (have: ...)`.
+- Card / PayPal payments are not supported on Footshop — COD only.
