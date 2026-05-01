@@ -2,6 +2,26 @@
 
 Version history and release notes. For the full commit log, see [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v1.7.0 — SK Store + Warsaw Sneaker Store module
+
+- New module `skstore` / `wss` covering both `skstore.eu` and `warsawsneakerstore.com` (shared backend). Guest checkout, address from CSV, country-aware shipping (PL → InPost paczkomat; CZ/SK/DE/AT/HU/RO/LT → DHL Europa), discount codes, PayPal payment.
+- **CapSolver presolve mode** for the order-finalise reCAPTCHA v2: solver runs in a background thread starting right after the cart is created, overlapping the address + payment HTTP work. Saves ~10–15s per order. Up to 3 retries with fresh tokens before falling back to a manual finalise link.
+- Webhook delivers the final `…/order/finish/<id>/<hash>` link — open it in a browser, log into PayPal, pay.
+- Footshop tweaks: success webhook now fires immediately after order creation (no waiting for Adyen submit); CC-vs-COD picked from CSV `card_number` rather than country.
+- Sites sidebar now lists every supported shop alphabetically.
+
+## v1.6.4 — Skatedeluxe PDP option parser rewrite + skateboard griptape bundling + cart clear + cleaner name
+
+- Skatedeluxe rewrote their PDP markup. The old `data-option-id="..." data-option-label="..." data-option-stock="..."` triple is gone — sizes now live inside `<select id="product-size-chooser" data-product-id="...">` with `<option value="<id>" data-id="<id>" data-in-stock="0|1">label</option>`. Bot's regex updated; the page also embeds an unrendered Twig template version of the same select (with `t.escape(...)` syntax), so the parser now requires the surrounding select to have a literal numeric `data-product-id` attribute.
+- Removed the 200KB `Range` header on the PDP fetch — the size-chooser sits ~600KB into the ~1.9MB page now, and the truncated body was returning zero options (which the bot reported as OOS).
+- Skateboard decks (`data-variation=deck`) auto-bundle a griptape that the server requires as a `children:[...]` array entry on `/api2/cart/items`. Bot now reads `<div id="product-griptape-choosen" data-product-id=".." data-product-option-id="..">` and submits the child alongside the deck.
+- Cart is now cleared at the start of every buy run (GET `/api2/cart` → DELETE `/api2/cart/items/<id>` per item) so a previous failed attempt doesn't stack stale lines onto the new order.
+- Product name no longer comes from `og:title` (which was wrapped in `Shop … online | skatedeluxe`). Uses `data-product-name` on `.product-grid` first, then `<h1>`, with HTML entities (`&quot;`, `&amp;`, …) unescaped.
+- Payment-method sniff at `/checkout_payment.php` is now permissive (multiple regex patterns); if the list still comes up empty the bot falls back to a blind POST and lets the server validate, instead of bailing out with `Bank transfer unavailable for this address`.
+- Buy mode now re-asserts the default address (idempotent legacy `address_book_process.php` POST) before ATC, so accounts whose register-time address didn't stick don't get silently bounced back to the address book.
+- `_confirm_order` was previously returning the URL on any HTTP 200, which falsely reported "Successful checkout" when the server actually bounced to `/address_book_process.php`, `/checkout_shipping.php`, `/checkout_payment.php`, or `/login.php`. Those redirects are now detected and reported as a real failure; a real success requires either an order-number / Bestellnummer match in the body or a `checkout_success` / `order_complete` / `thank` segment in the final URL.
+- `_select_shipping`, `_select_payment_bank`, `_select_payment_stripe`, and `_confirm_order` now include the `_token` CSRF field in their bodies (matches what `_save_address` already did) and a proper `Referer` header. Previously the server accepted the POST with HTTP 200 but silently re-rendered the same step rather than advancing — so the bot would think payment was selected when the cart was actually still on the payment page. Step success is now detected by the *final URL* after redirects (`checkout_payment` / `checkout_confirm` / `checkout_process`), not just by HTTP status.
+
 ## v1.6.3 — Skatedeluxe save-address: tolerate missing CSV `date_of_birth`
 
 - Fix: `do_sd_register` crashed with `AttributeError: 'Task' object has no attribute 'date_of_birth'` after a successful register, because the Task dataclass has no such field. The address-save path now uses `getattr(task, "date_of_birth", "")` and falls back to the `1990-01-15` placeholder, so older CSVs without the column work as before.
