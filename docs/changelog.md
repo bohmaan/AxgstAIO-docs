@@ -2,25 +2,25 @@
 
 What changed in each release. For the raw commit log, see the [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
-## Unreleased — Solebox + Proshop modules
+## v1.9.0 — Solebox + Proshop modules
 
 ### Solebox
 
-- New module: [Solebox](/sites/solebox) (`solebox` / `sb`) — sneaker shop on Charybdis (`api.solebox.com`) + Scayle Cloud checkout.
-- **`buy` mode** — login + ATC on Charybdis, then handoff of the logged-in `/en-eu/checkout` URL via webhook. User finishes address + Saferpay card in browser.
-- **`register` mode** — creates the account via `/users/auth/register` (clientId 198), logs in immediately so subsequent buys skip register.
-- **`login` / `login_check` mode** — verify credentials and refresh cached session.
-- Cloudflare bypass via `chrome116` impersonate + storefront warmup; cf_solver fallback if CF still challenges the API host.
-- Scayle checkout endpoints mapped (`/state`, `/state/order/addresses/shipping`, `/state/order/payment/option`, `/state/order/confirmation/execute`) but not wired — Scayle JWT exchange + Saferpay 3DS card form are browser-only.
+- New module: [Solebox](/sites/solebox) (`solebox` / `sb`) — EU sneaker store.
+- **`buy` mode** — login, hold the requested EU size, webhook the logged-in checkout link. Finish address + card in browser.
+- **`register` mode** — creates the account and logs in. Subsequent `buy` tasks skip registration.
+- **`login` mode** — verify credentials and refresh the cached session.
+- Cloudflare-protected; bot handles CF challenges automatically.
 
 ### Proshop
 
-- New module: [Proshop](/sites/proshop) (`proshop` / `ps`) — German electronics shop on IdentityServer4 + ASP.NET MVC checkout.
-- **`buy` mode** — fresh login, ATC, then 4-request linear walk: Terms → Delivery (DPD private) → Payment scrape → Payment POST → PayPal handoff URL webhooked.
-- **`register` mode** — creates the account on `auth.proshop.de`, logs in, writes the address to the customer profile via `/CustomerCenter/CustomerAccount/PartialRegister`.
-- **`addy_fix` mode** — for accounts without a saved address. Required before `buy` works (otherwise the checkout flow lands on Step 1).
-- Cloudflare TLS bypass via `chrome116` impersonate (modern Chrome impersonations get 403 on `auth.proshop.de`).
-- No session caching — login runs fresh on every task to avoid stale-cookie checkout bounces.
+- New module: [Proshop](/sites/proshop) (`proshop` / `ps`) — German/Austrian/Polish/Dutch electronics store.
+- **`buy` mode** — fresh login, ATC, drives the checkout, webhooks the PayPal handoff URL.
+- **`register` mode** — creates the account and writes the shipping address to the customer profile. Account is immediately ready for `buy`.
+- **`addy_fix` mode** — for accounts without a saved address; logs in and posts the address form once.
+- **Pickup mode** — `sizes=pickup` + `postal_code` finds the nearest DPD pickup shop.
+- **Keyword monitoring** — put a keyword in the URL column instead of a product link; the bot polls Proshop search until a match appears.
+- Multi-TLD: `.de`, `.at`, `.pl`, `.nl` — auto-detected from the product URL or set via the site code.
 
 ## v1.8.0 — Colorskates module (Greek Hypercenter shop)
 
