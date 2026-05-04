@@ -19,6 +19,8 @@
 | [Colorskates](/sites/colorskates) | `colorskates` / `cs` | ✅ | ✅ |
 | [IPZS](/sites/ipzs) | `ipzs` | ✅ | — |
 | [Pagro](/sites/pagro) | `pagro` / `pg` | ✅ | ✅ |
+| [Proshop](/sites/proshop) | `proshop` / `ps` | ✅ | ✅ |
 | [Skatedeluxe](/sites/skatedeluxe) | `skatedeluxe` / `sd` | ✅ | ✅ |
+| [Solebox](/sites/solebox) | `solebox` / `sb` | ✅ | handoff |
 | [Footshop](/sites/footshop) | `footshop` / `fs` | ✅ | ✅ |
 | [Queue-it (generic)](/sites/queueit) | `qit` / `queueit` | pass-only | — |
