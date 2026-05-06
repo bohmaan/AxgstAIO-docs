@@ -1,2 +1,0 @@
-site;url;mode;qty;sizes;max_price;delay_sec;email;password;discount;first_name;last_name;phone;street;building_number;city;postal_code;state;country_code;card_number;card_exp;card_cvv
-elbenwald;;register;1;;0;0;new@example.com;NewP4ss;;John;Doe;+491701234567;Hauptstrasse;10;Berlin;10115;BE;DE;;;

@@ -1,2 +1,0 @@
-site;url;mode;qty;sizes;max_price;delay_sec;email;password;discount;first_name;last_name;phone;street;building_number;city;postal_code;state;country_code;card_number;card_exp;card_cvv
-futbolemotion;https://www.futbolemotion.com/es/example;buy;1;42,43;300;3;guest@example.com;;;John;Doe;+34600123456;Calle Mayor;1;Madrid;28013;Madrid;ES;4111111111111111;12/30;123

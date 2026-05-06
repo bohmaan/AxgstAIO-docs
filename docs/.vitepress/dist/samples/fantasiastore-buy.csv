@@ -1,2 +1,0 @@
-site;url;mode;qty;sizes;max_price;delay_sec;email;password;discount;first_name;last_name;phone;street;building_number;city;postal_code;state;country_code;card_number;card_exp;card_cvv
-fantasiastore;https://www.fantasiastore.it/example;buy;1;;200;3;guest@example.com;;;John;Doe;+390612345678;Via Roma;1;Roma;00184;RM;IT;;;
