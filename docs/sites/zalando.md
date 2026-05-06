@@ -1,46 +1,17 @@
 # Zalando
 
-**Code:** `zalando` / `zal`
+**Code:** `zalando` (alias `zal`)
+**Region:** EU
+**Modes:** `buy`
+**Payment:** PayPal / Klarna / card (manual handoff)
+**Notes:** Account login required. URL host picks the storefront (de/pl/cz/...).
 
-## Regions
-
-Auto-detected from URL TLD. `country_code` is used only when the URL is empty (register tasks).
-
-| TLD | Country | Domain |
-|-----|---------|--------|
-| `.cz` | CZ | www.zalando.cz |
-| `.de` | DE | www.zalando.de |
-| `.pl` | PL | www.zalando.pl |
-| `.at` | AT | www.zalando.at |
-| `.fr` | FR | www.zalando.fr |
-| `.es` | ES | www.zalando.es |
-| `.co.uk` | GB | www.zalando.co.uk |
-| `.nl` | NL | www.zalando.nl |
-| `.sk` | SK | www.zalando.sk |
-| `.it` | IT | www.zalando.it |
-
-## Sample CSV
-
-<div class="download-box">
-
-- 📄 [zalando-buy.csv](/samples/zalando-buy.csv)
-
-</div>
-
-## Buy row
+## CSV row
 
 ```csv
-zalando;https://www.zalando.cz/example.html;buy;1;3000;3;you@mail.com;P4ss;M,L;CZ
+zalando;https://www.zalando.de/example.html;buy;1;42,43;300;3;guest@example.com;;;John;Doe;+491701234567;Hauptstrasse;10;Berlin;10115;BE;DE;;;
 ```
 
-::: warning Register not supported
-Zalando register is temporarily disabled. Create accounts manually via the website and add a default address before running buy tasks.
-:::
+## Modes
 
-## Known issues
-
-| Error | Cause | Fix |
-|-------|-------|-----|
-| `Login failed — Akamai halt` | Proxy flagged | Use residential proxies |
-| `Checkout failed — no saved address` | Account has no default address | Add one via the Zalando website |
-| `order-token-expired` | Stale checkout version | Retry (auto-refetch in v1.2.0+) |
+- `buy` — login, monitor PDP, ATC, address + shipping, place order.

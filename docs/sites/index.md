@@ -1,26 +1,21 @@
 # Sites
 
-| Site | Code | Buy | Register |
-|------|------|-----|----------|
-| [Zalando](/sites/zalando) | `zalando` / `zal` | ✅ | — |
-| [SportsShoes](/sites/sportsshoes) | `sportsshoes` / `ss` | ✅ | ✅ |
-| [BasketballEmotion](/sites/basketballemotion) | `basketballemotion` / `be` | ✅ | ✅ |
-| [FutbolEmotion](/sites/futbolemotion) | `futbolemotion` / `fe` | ✅ | ✅ |
-| [Empik](/sites/empik) | `empik` | ✅ | ✅ |
-| [Elbenwald](/sites/elbenwald) | `elbenwald` / `ew` | ✅ | ✅ |
-| [FootDistrict](/sites/footdistrict) | `footdistrict` / `fd` | ✅ | ✅ |
-| [Mycomics](/sites/mycomics) | `mycomics` / `mc` | ✅ | — |
-| [Sportvision](/sites/sportvision) | `sportvision` / `sv` | ✅ | — |
-| [Dfn](/sites/dfn) | `dfn` | ✅ | — |
-| [Fantasiastore](/sites/fantasiastore) | `fantasiastore` / `fa` | ✅ | ✅ |
-| [Mueller](/sites/mueller) | `mueller` / `ml` | ✅ | ✅ |
-| [Games Island](/sites/gamesisland) | `gamesisland` / `gi` | ✅ | ✅ |
-| [CatchYourCards](/sites/catchyourcards) | `catchyourcards` / `cyc` | ✅ | — |
-| [Colorskates](/sites/colorskates) | `colorskates` / `cs` | ✅ | ✅ |
-| [IPZS](/sites/ipzs) | `ipzs` | ✅ | — |
-| [Pagro](/sites/pagro) | `pagro` / `pg` | ✅ | ✅ |
-| [Proshop](/sites/proshop) | `proshop` / `ps` | ✅ | ✅ |
-| [Skatedeluxe](/sites/skatedeluxe) | `skatedeluxe` / `sd` | ✅ | ✅ |
-| [Solebox](/sites/solebox) | `solebox` / `sb` | ✅ | handoff |
-| [Footshop](/sites/footshop) | `footshop` / `fs` | ✅ | ✅ |
-| [Queue-it (generic)](/sites/queueit) | `qit` / `queueit` | pass-only | — |
+| Site | Code | Region | Buy | Register |
+|------|------|--------|-----|----------|
+| [Mediaexpert](/sites/mediaexpert) | `mediaexpert` / `me` | PL | ✅ | — |
+| [Empik](/sites/empik) | `empik` | PL | ✅ | ✅ |
+| [Elbenwald](/sites/elbenwald) | `elbenwald` / `ew` | DE / EU | ✅ | ✅ |
+| [BasketballEmotion](/sites/basketballemotion) | `basketballemotion` / `be` | ES / EU | ✅ | ✅ |
+| [FutbolEmotion](/sites/futbolemotion) | `futbolemotion` / `fe` | ES / EU | ✅ | ✅ |
+| [MyComics](/sites/mycomics) | `mycomics` / `mc` | IT | ✅ | — |
+| [Fantasiastore](/sites/fantasiastore) | `fantasiastore` / `fa` | IT | ✅ | ✅ |
+| [Games Island](/sites/gamesisland) | `gamesisland` / `gi` | DE / EU | ✅ | ✅ |
+| [Proshop](/sites/proshop) | `proshop` / `ps` | DE/AT/NL/DK | ✅ | ✅ |
+| [Solebox](/sites/solebox) | `solebox` / `sb` | DE / EU | ✅ | handoff |
+| [Footshop](/sites/footshop) | `footshop` / `fs` | CZ / EU | ✅ | ✅ |
+| [Skatedeluxe](/sites/skatedeluxe) | `skatedeluxe` / `sd` | DE / EU | ✅ | ✅ |
+| [Sportvision](/sites/sportvision) | `sportvision` / `sv` | RS | ✅ | — |
+| [SportsShoes](/sites/sportsshoes) | `sportsshoes` / `ss` | UK / EU | ✅ | ✅ |
+| [SK Store / WSS](/sites/skstore) | `skstore` | IT | ✅ | — |
+| [Zalando](/sites/zalando) | `zalando` / `zal` | EU | ✅ | — |
+| [Queue-it (generic)](/sites/queueit) | `queueit` / `qit` | any | pass-only | — |

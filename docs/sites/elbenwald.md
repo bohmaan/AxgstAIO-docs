@@ -1,40 +1,22 @@
 # Elbenwald
 
-**Code:** `elbenwald` / `ew`
+**Code:** `elbenwald` (alias `ew`)
+**Region:** Germany / EU
+**Modes:** `buy`, `register`, `login`, `presolve`, `force`, `test`
+**Payment:** Card / PayPal (manual handoff)
+**Notes:** Cloudflare Turnstile on login and checkout — requires CapSolver key.
 
-## Region
-
-Germany primary. Ships EU-wide.
-
-## Sample CSVs
-
-<div class="download-box">
-
-- 📄 [elbenwald-buy.csv](/samples/elbenwald-buy.csv)
-- 📄 [elbenwald-register.csv](/samples/elbenwald-register.csv)
-
-</div>
-
-## Buy row
+## CSV row
 
 ```csv
-ew;https://www.elbenwald.de/product-slug;buy;1;60;3;you@mail.de;P4ss;L;DE
+elbenwald;https://www.elbenwald.de/p/example;buy;1;M,L;200;3;guest@example.com;;;John;Doe;+491701234567;Hauptstrasse;10;Berlin;10115;BE;DE;;;
 ```
 
-## Register row
+## Modes
 
-```csv
-ew;;register;1;0;0;new@mail.de;NewP4ss;;DE;Hans;Mueller;Hauptstrasse;12;10115;Berlin;+4915112345678
-```
-
-Register requires a CapSolver key configured in `config.ini` for the reCAPTCHA v3 step.
-
-::: tip Country support
-Currently mapped: DE / AT / CH / BE / BG / DK / EE / FI / FR / AU. For other countries the bot falls back to DE.
-:::
-
-## Known issues
-
-- Limited-edition drops may be behind a waiting-list / queue — the bot can't bypass those.
-- Default shipping is DHL; override via `country_code`.
-- `Register failed — reCAPTCHA score too low`: CapSolver gave a token below 0.7. Retry the task.
+- `buy` — monitor PDP, ATC, address + shipping + payment, place order.
+- `register` — create account with saved default address.
+- `login` — verify saved login session.
+- `presolve` — keep a Turnstile token warm in the background.
+- `force` — skip stock check, push ATC immediately.
+- `test` — dry-run flow without committing the order.

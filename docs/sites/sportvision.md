@@ -1,26 +1,17 @@
 # Sportvision
 
-**Code:** `sportvision` / `sv`
+**Code:** `sportvision` (alias `sv`)
+**Region:** Serbia
+**Modes:** `buy`
+**Payment:** Card on delivery
+**Notes:** Guest checkout — no account required.
 
-## Regions
-
-`RS` (dinar) and `HR` (euro).
-
-## Sample CSV
-
-<div class="download-box">
-
-- 📄 [sportvision-buy.csv](/samples/sportvision-buy.csv)
-
-</div>
-
-## Buy row
+## CSV row
 
 ```csv
-sv;https://www.sportvision.rs/p/product-slug;buy;1;15000;3;you@mail.com;P4ss;42;RS
+sportvision;https://www.sportvision.rs/example;buy;1;42,43;300;3;guest@example.com;;;John;Doe;+381601234567;Knez Mihailova;1;Beograd;11000;;RS;;;
 ```
 
-## Known issues
+## Modes
 
-- Dinar-only payment methods are not supported — only cards and PayPal where available.
-- Stock levels are sometimes wrong; item may show available then fail at ATC.
+- `buy` — monitor PDP, ATC, address + shipping, place order with cash/card on delivery.

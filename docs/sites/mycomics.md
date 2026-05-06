@@ -1,25 +1,17 @@
-# Mycomics
+# MyComics
 
-**Code:** `mycomics` / `mc`
+**Code:** `mycomics` (alias `mc`)
+**Region:** Italy / EU
+**Modes:** `buy`
+**Payment:** PayPal (manual handoff)
+**Notes:** Guest checkout — no account required.
 
-## Region
-
-Ships EU-wide.
-
-## Sample CSV
-
-<div class="download-box">
-
-- 📄 [mycomics-buy.csv](/samples/mycomics-buy.csv)
-
-</div>
-
-## Buy row
+## CSV row
 
 ```csv
-mc;https://www.mycomics.com/en/product/xxx;buy;1;100;3;you@mail.com;P4ss;;EU
+mycomics;https://www.mycomics.com/en/example;buy;1;;100;3;guest@example.com;;;John;Doe;+390612345678;Via Roma;1;Roma;00184;RM;IT;;;
 ```
 
-## Known issues
+## Modes
 
-- Rare items go out of stock between size probe and ATC — no inventory reservation.
+- `buy` — monitor product, ATC, address + shipping, PayPal handoff.

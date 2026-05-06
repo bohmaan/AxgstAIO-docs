@@ -1,38 +1,18 @@
 # SportsShoes
 
-**Code:** `sportsshoes` / `ss`
+**Code:** `sportsshoes` (alias `ss`)
+**Region:** UK / EU
+**Modes:** `buy`, `register`
+**Payment:** Card / PayPal
+**Notes:** Card columns required for `buy`. Account login required.
 
-## Regions
-
-`country_code`: `GB`, `DE`, `FR`, `IT`, `ES`, …
-
-## Sample CSVs
-
-<div class="download-box">
-
-- 📄 [sportsshoes-buy.csv](/samples/sportsshoes-buy.csv)
-- 📄 [sportsshoes-register.csv](/samples/sportsshoes-register.csv)
-
-</div>
-
-## Buy row
+## CSV row
 
 ```csv
-ss;https://www.sportsshoes.com/product/xxx;buy;1;200;3;you@mail.com;P4ss;42,43;GB
+sportsshoes;https://www.sportsshoes.com/product/example;buy;1;9,9.5,10;200;3;guest@example.com;;;John;Doe;+447700123456;High Street;1;London;SW1A 1AA;;GB;4111111111111111;12/30;123
 ```
 
-URL can also be a keyword or SKU — the bot falls back to a Bloomreach search and takes the first match.
+## Modes
 
-## Register row
-
-```csv
-ss;;register;1;0;0;new@mail.com;NewP4ss;John;Smith;Baker Street;221;NW16XE;London;GB;+441234567890
-```
-
-## Known issues
-
-| Error | Cause | Fix |
-|-------|-------|-----|
-| `Captcha failed` | reCAPTCHA score too low | Residential proxy |
-| `no shipping options` | Item doesn't ship to `country_code` | Change country or skip |
-| `3DS required` | Payment challenge | Complete 3DS on your phone; order stays pending until you do |
+- `buy` — login, monitor PDP, ATC, address + shipping, card payment.
+- `register` — create account with saved default address.

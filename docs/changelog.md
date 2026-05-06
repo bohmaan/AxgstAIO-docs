@@ -2,6 +2,15 @@
 
 What changed in each release. For the raw commit log, see the [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v2.0.0 — Major rework
+
+- New module: **Mediaexpert** (PL) — guest checkout + tpay card payment.
+- **Trimmed module set** to 16 supported sites + Queue-it. Removed: catchyourcards, colorskates, dfn, footdistrict, ipzs, mueller, pagro, crocs.
+- **Shared public webhook** — every successful checkout posts to one Discord channel (Title / Store / Product / Size / Method / Price / Mode). Failed checkouts not posted publicly. User webhooks add Account / Order ID / Payment URL.
+- **Unified console output** — same event vocabulary, colors, and `[Site]` prefix across every module.
+- **Unified CSV** — single header used by every module; card columns kept even where unused. Sample at `tasks.example.csv`.
+- **Docs rewrite** — every site page in the same compact format (Code / Region / Modes / Payment / Notes / CSV row).
+
 ## v1.9.0 — Solebox + Proshop modules
 
 ### Solebox

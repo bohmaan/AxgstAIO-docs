@@ -1,32 +1,19 @@
 # FutbolEmotion
 
-**Code:** `futbolemotion` / `fe`
+**Code:** `futbolemotion` (alias `fe`)
+**Region:** Spain / EU
+**Modes:** `buy`, `register`, `addressfix`
+**Payment:** Card with Adyen 3DS
+**Notes:** Card columns required for `buy`. 3DS challenge handled inline.
 
-Sister site of [BasketballEmotion](/sites/basketballemotion) — same Empathy platform, identical flow.
-
-## Regions
-
-Market segment in the URL path (`/es/`, `/fr/`, `/it/`, …). Falls back to `/eu/`.
-
-## Sample CSVs
-
-<div class="download-box">
-
-- 📄 [futbolemotion-buy.csv](/samples/futbolemotion-buy.csv)
-- 📄 [futbolemotion-register.csv](/samples/futbolemotion-register.csv)
-
-</div>
-
-## Buy row
+## CSV row
 
 ```csv
-fe;https://www.futbolemotion.com/es/boots-nike-mercurial;buy;1;150;3;you@mail.com;P4ss;42;ES
+futbolemotion;https://www.futbolemotion.com/es/example;buy;1;42,43;300;3;guest@example.com;;;John;Doe;+34600123456;Calle Mayor;1;Madrid;28013;Madrid;ES;4111111111111111;12/30;123
 ```
 
-URL can be a SKU — the bot runs an Empathy search.
+## Modes
 
-## Register row
-
-```csv
-fe;;register;1;0;0;new@mail.com;NewP4ss;Juan;Perez;Calle Gran Via;1;28013;Madrid;ES;+34612345678
-```
+- `buy` — monitor PDP, ATC, address + shipping, Adyen-encrypted card payment.
+- `register` — create account with saved default address.
+- `addressfix` — overwrite the default address on an existing account.
