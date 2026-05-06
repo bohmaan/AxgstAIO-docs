@@ -12,6 +12,12 @@
 footshop;https://www.footshop.com/en/example;buy;1;42,43;300;3;guest@example.com;;;John;Doe;+420777123456;Vodickova;1;Praha;110 00;PR;CZ;;;
 ```
 
+
+## Sample CSV
+
+- [footshop-buy.csv](/samples/footshop-buy.csv)
+- [footshop-register.csv](/samples/footshop-register.csv)
+
 ## Modes
 
 - `buy` — monitor PDP, ATC, address + shipping, place order.

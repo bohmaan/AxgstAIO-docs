@@ -12,6 +12,12 @@
 futbolemotion;https://www.futbolemotion.com/es/example;buy;1;42,43;300;3;guest@example.com;;;John;Doe;+34600123456;Calle Mayor;1;Madrid;28013;Madrid;ES;4111111111111111;12/30;123
 ```
 
+
+## Sample CSV
+
+- [futbolemotion-buy.csv](/samples/futbolemotion-buy.csv)
+- [futbolemotion-register.csv](/samples/futbolemotion-register.csv)
+
 ## Modes
 
 - `buy` — monitor PDP, ATC, address + shipping, Adyen-encrypted card payment.

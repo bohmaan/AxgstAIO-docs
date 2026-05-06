@@ -12,6 +12,12 @@
 sportsshoes;https://www.sportsshoes.com/product/example;buy;1;9,9.5,10;200;3;guest@example.com;;;John;Doe;+447700123456;High Street;1;London;SW1A 1AA;;GB;4111111111111111;12/30;123
 ```
 
+
+## Sample CSV
+
+- [sportsshoes-buy.csv](/samples/sportsshoes-buy.csv)
+- [sportsshoes-register.csv](/samples/sportsshoes-register.csv)
+
 ## Modes
 
 - `buy` — login, monitor PDP, ATC, address + shipping, card payment.

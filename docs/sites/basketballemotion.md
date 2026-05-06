@@ -12,6 +12,12 @@
 basketballemotion;https://www.basketballemotion.com/en/example;buy;1;42,43;300;3;guest@example.com;;;John;Doe;+34600123456;Calle Mayor;1;Madrid;28013;Madrid;ES;4111111111111111;12/30;123
 ```
 
+
+## Sample CSV
+
+- [basketballemotion-buy.csv](/samples/basketballemotion-buy.csv)
+- [basketballemotion-register.csv](/samples/basketballemotion-register.csv)
+
 ## Modes
 
 - `buy` — monitor PDP, ATC, address + shipping, Adyen-encrypted card payment.

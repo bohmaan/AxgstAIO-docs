@@ -11,11 +11,11 @@
 | [Fantasiastore](/sites/fantasiastore) | `fantasiastore` / `fa` | IT | ✅ | ✅ |
 | [Games Island](/sites/gamesisland) | `gamesisland` / `gi` | DE / EU | ✅ | ✅ |
 | [Proshop](/sites/proshop) | `proshop` / `ps` | DE/AT/NL/DK | ✅ | ✅ |
-| [Solebox](/sites/solebox) | `solebox` / `sb` | DE / EU | ✅ | handoff |
+| [Solebox](/sites/solebox) | `solebox` / `sb` | DE / EU | ✅ | ✅ |
 | [Footshop](/sites/footshop) | `footshop` / `fs` | CZ / EU | ✅ | ✅ |
 | [Skatedeluxe](/sites/skatedeluxe) | `skatedeluxe` / `sd` | DE / EU | ✅ | ✅ |
-| [Sportvision](/sites/sportvision) | `sportvision` / `sv` | RS | ✅ | — |
+| [Sportvision](/sites/sportvision) | `sportvision` / `sv` | CZ | ✅ | — |
 | [SportsShoes](/sites/sportsshoes) | `sportsshoes` / `ss` | UK / EU | ✅ | ✅ |
-| [SK Store / WSS](/sites/skstore) | `skstore` | IT | ✅ | — |
+| [SK Store / WSS](/sites/skstore) | `skstore` | PL / EU | ✅ | — |
 | [Zalando](/sites/zalando) | `zalando` / `zal` | EU | ✅ | — |
 | [Queue-it (generic)](/sites/queueit) | `queueit` / `qit` | any | pass-only | — |

@@ -12,6 +12,12 @@
 proshop;https://www.proshop.de/example;buy;1;;1000;3;guest@example.com;;;John;Doe;+491701234567;Hauptstrasse;10;Berlin;10115;BE;DE;;;
 ```
 
+
+## Sample CSV
+
+- [proshop-buy.csv](/samples/proshop-buy.csv)
+- [proshop-register.csv](/samples/proshop-register.csv)
+
 ## Modes
 
 - `buy` — monitor PDP, ATC, address + shipping, place order.

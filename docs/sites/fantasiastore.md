@@ -12,6 +12,12 @@
 fantasiastore;https://www.fantasiastore.it/example;buy;1;;200;3;guest@example.com;;;John;Doe;+390612345678;Via Roma;1;Roma;00184;RM;IT;;;
 ```
 
+
+## Sample CSV
+
+- [fantasiastore-buy.csv](/samples/fantasiastore-buy.csv)
+- [fantasiastore-register.csv](/samples/fantasiastore-register.csv)
+
 ## Modes
 
 - `buy` — monitor PDP, ATC, address + shipping, place order.

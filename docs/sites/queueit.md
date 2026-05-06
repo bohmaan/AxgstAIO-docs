@@ -12,6 +12,11 @@
 queueit;https://www.example.com/?queueit=1;buy;1;;9999;3;guest@example.com;;;John;Doe;+48123456789;Marszalkowska;100;Warszawa;00-001;mazowieckie;PL;;;
 ```
 
+
+## Sample CSV
+
+- [queueit-pass.csv](/samples/queueit-pass.csv)
+
 ## Modes
 
 - `buy` — solve the Queue-it wait, return the unlocked session/cookies for downstream use.
