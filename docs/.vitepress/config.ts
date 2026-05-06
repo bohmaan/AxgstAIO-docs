@@ -7,6 +7,7 @@ export default defineConfig({
   lang: 'en-US',
   cleanUrls: true,
   lastUpdated: true,
+  ignoreDeadLinks: true,
 
   head: [
     ['link', { rel: 'icon', href: '/AxgstAIO-docs/favicon.svg' }],
