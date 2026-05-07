@@ -59,6 +59,7 @@ export default defineConfig({
             { text: 'Fantasiastore', link: '/sites/fantasiastore' },
             { text: 'Footshop', link: '/sites/footshop' },
             { text: 'FutbolEmotion', link: '/sites/futbolemotion' },
+            { text: 'Frasers (Sports Direct, GAME UK, Flannels...)', link: '/sites/frasers' },
             { text: 'Games Island', link: '/sites/gamesisland' },
             { text: 'Mediaexpert', link: '/sites/mediaexpert' },
             { text: 'MyComics', link: '/sites/mycomics' },

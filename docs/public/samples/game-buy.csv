@@ -1,0 +1,2 @@
+site;url;mode;qty;sizes;max_price;delay_sec;email;password;discount;first_name;last_name;phone;street;building_number;city;postal_code;state;country_code;card_number;card_exp;card_cvv
+game;https://www.game.co.uk/playstation-portal-838178#colcode=83817869;buy;1;;200;3;guest@example.com;;;John;Doe;+447700123456;High Street;1;London;SW1A 1AA;;GB;;;
