@@ -16,7 +16,7 @@
 | [Skatedeluxe](/sites/skatedeluxe) | `skatedeluxe` / `sd` | DE / EU | ✅ | ✅ |
 | [Sportvision](/sites/sportvision) | `sportvision` / `sv` | CZ | ✅ | — |
 | [SportsShoes](/sites/sportsshoes) | `sportsshoes` / `ss` | UK / EU | ✅ | ✅ |
-| [Frasers (Sports Direct, GAME UK, Flannels...)](/sites/frasers) | `game` / `sportsdirect` / `flannels` / `studio` / `houseoffraser` / `usc` / `everlast` | UK | ✅ PayPal | — |
+| [Frasers (Sports Direct, GAME UK, Flannels...)](/sites/frasers) | `game` / `sportsdirect` / `flannels` / `studio` / `houseoffraser` / `usc` / `everlast` | UK / EU | ✅ | — |
 | [SK Store / WSS](/sites/skstore) | `skstore` | PL / EU | ✅ | — |
 | [Zalando](/sites/zalando) | `zalando` / `zal` | EU | ✅ | — |
 | [Queue-it (generic)](/sites/queueit) | `queueit` / `qit` | any | pass-only | — |

@@ -4,16 +4,14 @@ What changed in each release. For the raw commit log, see the [GitHub releases](
 
 ## v2.1.1 — Frasers polish
 
-- **Card → PayPal auto-fallback** for Frasers SKUs routed through Adyen instead of Stripe (e.g. some GAME UK products). The bot keeps the same checkout session and webhooks a PayPal redirect URL instead of failing.
 - **Akamai warmup fix** — `/basket` GET restored in the warmup phase so `_abck` cookie gets a real challenge before ATC. Resolves intermittent 403 on `/cart/add`.
 - **Faster startup** — IP lookup runs in parallel with the homepage warmup, PDP first-poll skips the redundant probe (one fewer round-trip), Akamai solver capped at 3 iterations / 15 s.
 - **Quieter logs** — debug-level lines (`Stripe pk loaded`, `Card token`, `Checkout session sid=…`, `Akamai sensor: ok`, etc.) removed from the success path.
 
 ## v2.1.0 — Frasers multi-site + CC checkout
 
-- **Frasers Group expansion** — one [shared module](/sites/frasers) now covers GAME UK, **Sports Direct**, **Flannels**, **Studio**, **House of Fraser**, **USC**, and **Everlast**. Same `/api/checkout/v2/*` backend, same Akamai + Hyper Solutions sensor.
-- **Credit/Debit Card checkout** — when the CSV row has `card_number` filled, the bot tokenizes the card directly with Stripe (using the public key from `/payment/setmethod`) and posts the `pm_…` token to `/payment/completeandconfirmorder`. Non-3DS cards finish outright; 3DS / SCA challenges open in the user's browser (same flow as BasketballEmotion / FutbolEmotion).
-- **PayPal flow unchanged** — falls back to PayPal redirect URL via webhook when card fields aren't filled.
+- **Frasers Group expansion** — one [shared module](/sites/frasers) now covers GAME UK, **Sports Direct**, **Flannels**, **Studio**, **House of Fraser**, **USC**, and **Everlast**. Same `/api/checkout/v2/*` backend, same Akamai + Hyper Solutions sensor. UK + most EU shipping addresses supported.
+- **Credit/Debit Card checkout** — bot tokenizes the card directly with Stripe (using the public key from `/payment/setmethod`) and posts the `pm_…` token to `/payment/completeandconfirmorder`. Non-3DS cards finish outright; 3DS / SCA challenges open in the user's browser (same flow as BasketballEmotion / FutbolEmotion).
 - **PDP retry on 5xx / network errors** — game.py and mediaexpert.py both poll the PDP with a lightweight Range request (~4 KB) and retry on 5xx / 429 / network failures with per-attempt logging.
 - **Headless CF solver rewrite** — `cf_headless.py` is now wait-only (no clicks), 75 s timeout, persistent profile. Stops the `cf_chl_rc_ni` retry loop on Solebox without needing CapSolver.
 

@@ -1,10 +1,10 @@
 # Frasers (Sports Direct, GAME UK, Flannels...)
 
-Every site on Frasers Group's commerce platform shares the same backend, so they're handled by a single multi-site module. The bot does **full guest checkout to a PayPal redirect URL** (when address fields are filled in CSV) — otherwise it falls back to holding the size in the basket and webhooking the cart link.
+Every site on Frasers Group's commerce platform shares the same backend, so they're handled by a single multi-site module. The bot does **full guest checkout via Credit/Debit Card** (Stripe tokenization + 3DS challenge in browser) when card fields are filled in the CSV — otherwise it falls back to holding the size in the basket and webhooking the cart link.
 
-**Region:** United Kingdom (delivery primarily to GB; some sites accept EU addresses)
+**Region:** UK / EU (delivery primarily to GB; the Frasers platform also accepts most EU addresses depending on the SKU)
 **Modes:** `buy`
-**Payment:** Credit/Debit Card (Stripe + 3DS challenge opens in browser) **or** PayPal (automated redirect URL via webhook). The bot picks Card if `card_number` is filled in the CSV row, otherwise PayPal. Falls back to manual basket handoff if address fields are missing.
+**Payment:** Credit/Debit Card (Stripe + 3DS challenge opens in browser). Falls back to manual basket handoff if address or card fields are missing.
 **Notes:** Akamai Bot Manager protects PDP/ATC. Hyper Solutions sensor token is needed (config: `hyper_api_key`, optional `hyper_jwt_key`). PDP polling uses Range requests (~3-4 KB) for upcoming products with retries on 404/410/500/502/503/504/429.
 
 ## Modules covered
@@ -33,22 +33,17 @@ PDP URL with `#colcode=...` fragment is also accepted — the colcode wins over 
 
 ## Required CSV fields
 
-**For PayPal automation:**
-
 - `email`
 - `first_name`, `last_name`
 - `street` (optionally `building_number`)
 - `city`, `postal_code`
 - `country_code` (e.g. `GB`)
 - `phone` (recommended for delivery updates)
-
-**For Credit/Debit Card automation** (in addition to all PayPal fields):
-
 - `card_number` — pan with or without spaces
 - `card_exp` — `MM/YY` or `MM/YYYY`
 - `card_cvv`
 
-If `card_number` is set, the bot tokenizes the card directly with Stripe (using the public key fetched from the live `/payment/setmethod` response), submits the resulting `pm_…` token to GAME's completion endpoint, and either:
+The bot tokenizes the card directly with Stripe (using the public key fetched from the live `/payment/setmethod` response), submits the resulting `pm_…` token to the Frasers completion endpoint, and either:
 
 - finishes the order outright (issuer skipped 3DS), or
 - captures the 3DS / SCA challenge URL, opens it in the user's default browser (matching the BasketballEmotion / FutbolEmotion 3DS flow), and webhooks the same URL as a fallback.
@@ -57,4 +52,4 @@ If any required field is missing the bot finishes ATC and webhooks the basket UR
 
 ## Modes
 
-- `buy` — poll PDP, ATC, full guest checkout via `/api/checkout/v2/*` flow, then either Card (Stripe + 3DS) or PayPal redirect URL.
+- `buy` — poll PDP, ATC, full guest checkout via `/api/checkout/v2/*` flow, Stripe tokenization + 3DS handoff in browser.
