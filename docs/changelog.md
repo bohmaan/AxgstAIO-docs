@@ -2,6 +2,10 @@
 
 What changed in each release. For the raw commit log, see the [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v2.1.3 — Multicart partial-OOS handling
+
+- **Don't checkout with a half-filled basket** — when one product in a `+`-separated multicart URL is in stock and the other is OOS, the bot now keeps polling `/cart/add` until *every* requested `sizeVariantId` is confirmed live in the basket before moving to checkout. Per-iteration log only updates when the in-cart count changes (`1/2 in cart — waiting for the remaining 1`).
+
 ## v2.1.2 — Multicart + Checkout.com support
 
 - **Multicart** — split the `url` field on `+` to ATC multiple products into the same basket on a single Akamai sensor token. Example: `https://www.game.co.uk/...417299#colcode=41729990 + https://www.game.co.uk/...857967#colcode=85796790`. The bot polls each PDP independently, fires one ATC POST with all line items, and runs one shared checkout flow.
