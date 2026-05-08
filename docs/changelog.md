@@ -2,6 +2,12 @@
 
 What changed in each release. For the raw commit log, see the [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v2.1.2 — Multicart + Checkout.com support
+
+- **Multicart** — split the `url` field on `+` to ATC multiple products into the same basket on a single Akamai sensor token. Example: `https://www.game.co.uk/...417299#colcode=41729990 + https://www.game.co.uk/...857967#colcode=85796790`. The bot polls each PDP independently, fires one ATC POST with all line items, and runs one shared checkout flow.
+- **Checkout.com NAS tokenization** — implemented for Frasers SKUs that route through Checkout.com instead of Stripe (Frames v3 format: 3 single-use `tok_…` tokens joined with commas, posted to `/payment/completeandconfirmorder` with `paymentReturnUrl` pointing at `/checkoutsp/cardverificationreturn/checkoutdotcom`). The Card flow now picks the right tokenizer based on the live `provider` field from `setmethod`.
+- **SSL CA fix** — Stripe and Checkout.com tokenizers no longer use `urllib.request` (which trips `CERTIFICATE_VERIFY_FAILED` on Windows machines without a configured CA store). Both now reuse the curl_cffi session, which carries its own bundled CA bundle.
+
 ## v2.1.1 — Frasers polish
 
 - **Akamai warmup fix** — `/basket` GET restored in the warmup phase so `_abck` cookie gets a real challenge before ATC. Resolves intermittent 403 on `/cart/add`.
