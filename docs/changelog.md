@@ -2,6 +2,14 @@
 
 What changed in each release. For the raw commit log, see the [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
 
+## v2.1.7 — Swatch new module (Adyen CC + PayPal)
+
+- **New site: Swatch** (`sw` / `swatch`, `swatch.com`) — Salesforce Commerce Cloud (SFRA) storefront, Akamai BMP-protected. Buy mode does ATC, full SFRA shipping/billing chain, then either CC or PayPal handoff depending on whether the CSV row carries card fields.
+- **Swatch CC checkout via Adyen Web Components** — server-side replication of the live React SPA's Adyen tokenisation: fetch pubkey from `checkoutshopper-live.adyen.com/checkoutshopper/v1/clientKeys/<key>`, encrypt card number/expiry/CVC with the same RSA-OAEP + A256CBC-HS512 JWE format the iframes use, then POST `dwfrm_payment_creditCardFields_adyenEncrypted*` blobs + the `adyenStateData` JSON to `/CheckoutServices-SubmitPayment` with `submit=submit-payment` (Swatch finalises the order in the same call). Detects 3DS/SCA challenge URLs in the response and webhooks them as a customer-completion link.
+- **Swatch DHL shipping by default** — shipping method `STANDARD-DE` (DHL); GLS / UPS / in-store-pickup constants exposed in `SW_SHIPPING_METHODS` for future per-task overrides.
+- **Swatch PayPal handoff fallback** — when no card data is in the CSV row, the bot calls `Paypal-GetPaypalOrderId`, returns a `paypal.com/checkoutnow?token=…` URL. The PayPal modal lets the customer pay with PayPal account or PayPal-hosted card form — both are auth-only ("hold") until the merchant captures.
+- **Swatch Akamai integration** — `_abck` is refreshed via Hyper Solutions before every state-changing POST (same pattern as Frasers). Requires `swatch.com` on the hyper plan; the bot logs `Akamai: swatch.com not whitelisted on hyper plan` clearly when the plan is missing the domain.
+
 ## v2.1.6 — Elbenwald 3× faster + MyComics PDP fix
 
 - **Elbenwald `buy` mode rewritten on `/store-api/*`** — total cart-touching time drops from ~3.3 s to ~1.0 s (≈3× faster) by replacing the storefront `/checkout/line-item/add` HTML-redirect path with a single `POST /store-api/checkout/cart/line-item` round-trip that returns the cart JSON for verify in one shot. Cart-clear is now `DELETE /store-api/checkout/cart` → 204 (instead of GET cart + N×DELETE per item).
