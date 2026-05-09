@@ -2,6 +2,7 @@
 
 | Site | Code | Region | Buy | Register |
 |------|------|--------|-----|----------|
+| [Alza](/sites/alza) | `alza` / `alza.cz` / `alza.de` / `alza.at` / `alza.hu` | CZ / DE / AT / HU | ✅ | — |
 | [Mediaexpert](/sites/mediaexpert) | `mediaexpert` / `me` | PL | ✅ | — |
 | [Empik](/sites/empik) | `empik` | PL | ✅ | ✅ |
 | [Elbenwald](/sites/elbenwald) | `elbenwald` / `ew` | DE / EU | ✅ | ✅ |

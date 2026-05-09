@@ -50,6 +50,21 @@ The bot tokenizes the card directly with Stripe (using the public key fetched fr
 
 If any required field is missing the bot finishes ATC and webhooks the basket URL for manual completion.
 
+## Multicart
+
+Frasers' platform accepts multiple line items in a single basket on the same Akamai sensor token, which lets the bot snipe several products in one session. Split the `url` field on `+` to ATC multiple SKUs into the same basket, then the bot runs **one shared checkout flow** (single Stripe tokenization, single 3DS handoff) for all of them.
+
+```csv
+sportsdirect;https://www.sportsdirect.com/<slug-a>-417299#colcode=41729990 + https://www.sportsdirect.com/<slug-b>-857967#colcode=85796790;buy;1;;200;3;guest@example.com;;;John;Doe;+447700123456;221B Baker Street;;London;NW1 6XE;Greater London;GB;;;
+```
+
+- Each PDP is polled independently (separate Range requests, separate retry-on-404/410/5xx loops). Polls run concurrently — no single PDP blocks the others.
+- ATC fires one POST with all `sizeVariantId` line items together. The bot keeps polling `/cart/add` until *every* requested SKU is confirmed live in the basket before moving to checkout — no half-filled-basket checkouts.
+- The per-iteration log only updates when the in-cart count changes (`1/2 in cart — waiting for the remaining 1`), so a long pre-drop wait stays quiet.
+- One product going OOS at the very last moment doesn't cancel the others: the bot keeps polling that SKU while the rest stay parked in the basket. If the OOS product never returns, the bot eventually times out and the user can manually clear the cart.
+
+Multicart works on every Frasers domain in the table above (use the same site code in column 1 — the URL TLDs route per-line internally).
+
 ## Modes
 
-- `buy` — poll PDP, ATC, full guest checkout via `/api/checkout/v2/*` flow, Stripe tokenization + 3DS handoff in browser.
+- `buy` — poll PDP, ATC, full guest checkout via `/api/checkout/v2/*` flow, Stripe tokenization + 3DS handoff in browser. Accepts a single PDP URL or a `+`-joined multicart URL.

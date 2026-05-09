@@ -53,6 +53,7 @@ export default defineConfig({
           text: 'Sites',
           items: [
             { text: 'Overview', link: '/sites/' },
+            { text: 'Alza (CZ / DE / AT / HU)', link: '/sites/alza' },
             { text: 'BasketballEmotion', link: '/sites/basketballemotion' },
             { text: 'Elbenwald', link: '/sites/elbenwald' },
             { text: 'Empik', link: '/sites/empik' },
