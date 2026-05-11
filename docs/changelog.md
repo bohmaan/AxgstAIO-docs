@@ -2,6 +2,12 @@
 
 What changed in each release. For the raw commit log, see the [GitHub releases](https://github.com/bohmaan/HopAIO/releases).
 
+## v2.1.21 — Remote kill from admin dashboard
+
+- **Kill button per live session** — admin panel → Live Sessions tab now has a Kill action next to each online session. Clicking it sets a `kill_requested` flag on the server; the bot's next heartbeat reads `{"kill": true}` in the response, fires a `cli_stopped` event with `reason=killed_by_admin`, drains the queue, then `os._exit(0)`. Worst-case latency to actual exit: heartbeat interval (10 s) + 2 s queue drain ≈ **12 s**.
+- **`POST /v1/admin/sessions/{id}/kill`** — new admin-gated endpoint. 404 when session doesn't exist; idempotent on already-killed/stopped rows. Fires an amber `CLI kill requested` embed to the ops Discord webhook so the action is audit-logged.
+- **Session row carries `kill_requested` + `status='killing'`** during the window between admin click and bot acknowledging. Button disables and shows "killing…" so a second click can't enqueue a stale signal.
+
 ## v2.1.20 — Fast offline detection + richer batch embeds
 
 - **Heartbeat 10s** (was 30s) — every CLI now pings the server every 10 seconds with active-task counts per site. The Live Sessions tab in the admin dashboard reflects up/down status within ~30 s of a bot crashing, losing network, or being closed.

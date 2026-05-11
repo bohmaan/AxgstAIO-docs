@@ -64,6 +64,10 @@ Sites          mediaexpert:120, alza:30
 Modes          Normal:80, Auto:50, COD:15, InStore:5
 ```
 
+### Remote kill (since v2.1.21)
+
+Admin dashboard → Live Sessions tab → **Kill** button next to each online bot. Sets `cli_sessions.kill_requested=1`. The bot's next POST to `/v1/events` sees `{"kill": true}` in the response, fires `cli_stopped` with `reason=killed_by_admin`, drains the queue, then `os._exit(0)`. Worst-case lag = heartbeat interval + 2 s ≈ **12 s** at the default 10 s heartbeat.
+
 ### `cli_offline` (since v2.1.20)
 
 Server-synthetic — fires from the session reaper when a bot misses heartbeats for `HOP_SESSION_OFFLINE_AFTER_S` seconds (default 25). The reaper sweeps every 5 s, so the worst-case detection lag is **~30 s** with the default 10 s heartbeat.
