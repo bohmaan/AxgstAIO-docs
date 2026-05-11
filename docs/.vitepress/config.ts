@@ -39,6 +39,7 @@ export default defineConfig({
             { text: 'Tasks CSV', link: '/guide/csv-format' },
             { text: 'Proxies', link: '/guide/proxies' },
             { text: 'Accounts & Sessions', link: '/guide/accounts' },
+            { text: 'Telemetry & Webhooks', link: '/guide/telemetry' },
           ],
         },
         {
@@ -78,7 +79,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/bohmaan/AxgstAIO' },
+      { icon: 'github', link: 'https://github.com/bohmaan/HopAIO' },
     ],
 
     footer: {

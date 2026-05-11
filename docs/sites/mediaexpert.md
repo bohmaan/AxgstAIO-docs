@@ -58,6 +58,116 @@ Where `317732001` is the real drop SKU and `317732222` is the always-in-stock du
 
 If the dummy POST fails the bot ABORTS before `/carts/orders` is ever called — no order is placed when the dummy might still be in cart.
 
+## Payment methods
+
+Mediaexpert offers multiple payment methods. The bot picks which one to use based on the `card_number` CSV column.
+
+| `card_number` | Transport | Method | What you get |
+|---|---|---|---|
+| `4111…` (real PAN) | Kurier (3) | Tpay Card (`payment_id=61`) | Tpay payment URL in webhook |
+| `gpay` / `googlepay` | Kurier (3) | Google Pay (`payment_id=538`) | Google Pay handoff URL |
+| `cod` / `pobranie` / `zapobraniem` / `cashondelivery` | Kurier (3) | Gotówka przy odbiorze (`payment_id=41`) | Courier brings goods, you pay cash on arrival |
+| `instore` / `odbior` / `pickup` | In-store pickup (1) | Pay at register (cash) | "Odbiór w sklepie" — pick up + pay cash at the store |
+| `instorecod` / `instorecard` | In-store pickup (1) | Pay at register (card) | "Odbiór w sklepie" — pick up + pay by card at the store |
+
+### Discovered `payment_id` table
+
+Brute-forced against `PUT /api/mp/carts/payments` in v2.1.18. Accepted IDs at the time of mapping:
+
+| `payment_id` | Name | Notes |
+|---|---|---|
+| 39 | Przelew internetowy (Tpay) | Bank transfer |
+| 41 | Gotówka przy odbiorze | COD |
+| 45 | BLIK | Polish instant payment |
+| 61 | Karta płatnicza (Tpay) | Standard card |
+| 63 | Raty (Tpay) | Installments |
+| 529 | Apple Pay | |
+| 538 | Google Pay | |
+
+### Store selection for in-store pickup
+
+`instore` / `instorecod` requires a physical store assignment after `transport_method=1` is set. The bot resolves it in this order:
+
+1. **`discount` CSV column** — integer POS id (per-task override).
+2. **`config.json` → `mediaexpert_default_pos_id`** — global default.
+3. **env `HOP_ME_DEFAULT_POS_ID`** — CI / one-shot override.
+4. **Automatic** — `GET /api/pos/list/search_nearest_by_cart` returns stores ranked by distance from the CSV `postal_code`; bot picks the first.
+
+The POS id is then POSTed to `/api/carts/deliveries/pos/statuses` with `{"id": "<pos_id>"}` before summary + order placement.
+
+**Example COD row:**
+
+```csv
+mediaexpert;https://www.mediaexpert.pl/product,id123;buy;1;;5000;3;guest@example.com;;;John;Doe;+48123456789;Marszalkowska;100;Warszawa;00-001;mazowieckie;PL;cod;;;
+```
+
+**Example in-store-pickup-pay-by-card row (auto store selection by postcode):**
+
+```csv
+mediaexpert;https://www.mediaexpert.pl/product,id123;buy;1;;5000;3;guest@example.com;;;John;Doe;+48123456789;Marszalkowska;100;Warszawa;00-001;mazowieckie;PL;instorecod;;;
+```
+
+**Example in-store-pickup with pinned POS id 1234:**
+
+```csv
+mediaexpert;https://www.mediaexpert.pl/product,id123;buy;1;;5000;3;guest@example.com;;;John;Doe;+48123456789;Marszalkowska;100;Warszawa;00-001;mazowieckie;PL;instore;1234;;
+```
+
+## Payment methods
+
+Mediaexpert offers multiple payment methods. The bot picks which one to use based on the `card_number` CSV column.
+
+| `card_number` | Transport | Method | What you get |
+|---|---|---|---|
+| `4111…` (real PAN) | Kurier (3) | Tpay Card (`payment_id=61`) | Tpay payment URL in webhook |
+| `gpay` / `googlepay` | Kurier (3) | Google Pay (`payment_id=538`) | Google Pay handoff URL |
+| `cod` / `pobranie` / `zapobraniem` / `cashondelivery` | Kurier (3) | Gotówka przy odbiorze (`payment_id=41`) | Courier brings goods, you pay cash on arrival |
+| `instore` / `odbior` / `pickup` | In-store pickup (1) | Pay at register (cash) | "Odbiór w sklepie" — pick up + pay cash at the store |
+| `instorecod` / `instorecard` | In-store pickup (1) | Pay at register (card) | "Odbiór w sklepie" — pick up + pay by card at the store |
+
+### Discovered `payment_id` table
+
+Brute-forced against `PUT /api/mp/carts/payments` in v2.1.18. Accepted IDs at the time of mapping:
+
+| `payment_id` | Name | Notes |
+|---|---|---|
+| 39 | Przelew internetowy (Tpay) | Bank transfer |
+| 41 | Gotówka przy odbiorze | COD |
+| 45 | BLIK | Polish instant payment |
+| 61 | Karta płatnicza (Tpay) | Standard card |
+| 63 | Raty (Tpay) | Installments |
+| 529 | Apple Pay | |
+| 538 | Google Pay | |
+
+### Store selection for in-store pickup
+
+`instore` / `instorecod` requires a physical store assignment after `transport_method=1` is set. The bot resolves it in this order:
+
+1. **`discount` CSV column** — integer POS id (per-task override).
+2. **`config.json` → `mediaexpert_default_pos_id`** — global default.
+3. **env `HOP_ME_DEFAULT_POS_ID`** — CI / one-shot override.
+4. **Automatic** — `GET /api/pos/list/search_nearest_by_cart` returns stores ranked by distance from the CSV `postal_code`; bot picks the first.
+
+The POS id is then POSTed to `/api/carts/deliveries/pos/statuses` with `{"id": "<pos_id>"}` before summary + order placement.
+
+**Example COD row:**
+
+```csv
+mediaexpert;https://www.mediaexpert.pl/product,id123;buy;1;;5000;3;guest@example.com;;;John;Doe;+48123456789;Marszalkowska;100;Warszawa;00-001;mazowieckie;PL;cod;;;
+```
+
+**Example in-store-pickup-pay-by-card row (auto store selection by postcode):**
+
+```csv
+mediaexpert;https://www.mediaexpert.pl/product,id123;buy;1;;5000;3;guest@example.com;;;John;Doe;+48123456789;Marszalkowska;100;Warszawa;00-001;mazowieckie;PL;instorecod;;;
+```
+
+**Example in-store-pickup with pinned POS id 1234:**
+
+```csv
+mediaexpert;https://www.mediaexpert.pl/product,id123;buy;1;;5000;3;guest@example.com;;;John;Doe;+48123456789;Marszalkowska;100;Warszawa;00-001;mazowieckie;PL;instore;1234;;
+```
+
 **Sample log:**
 
 ```

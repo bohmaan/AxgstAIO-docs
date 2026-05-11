@@ -1,6 +1,40 @@
 # Changelog
 
-What changed in each release. For the raw commit log, see the [GitHub releases](https://github.com/bohmaan/AxgstAIO/releases).
+What changed in each release. For the raw commit log, see the [GitHub releases](https://github.com/bohmaan/HopAIO/releases).
+
+## v2.1.20 — Fast offline detection + richer batch embeds
+
+- **Heartbeat 10s** (was 30s) — every CLI now pings the server every 10 seconds with active-task counts per site. The Live Sessions tab in the admin dashboard reflects up/down status within ~30 s of a bot crashing, losing network, or being closed.
+- **Offline embed** — when the server reaper marks a session offline (last_seen older than `HOP_SESSION_OFFLINE_AFTER_S`, default 25 s), it now fires a red `CLI offline` embed to the ops Discord webhook so the operator sees the drop without watching the dashboard.
+- **`batch_started` / `batch_finished` embeds carry sites + modes** — instead of one anonymous "Batch started — N tasks", the embed now lists per-site task counts (e.g. `mediaexpert:120, alza:30`) and per-mode counts (e.g. `Normal:80, COD:50, InStore:20`). Same for batch_finished so you can verify a hyped drop ran the modes you expected.
+- **`cli_started` embed enumerates inputs** — System (OS + Python version), license tier, server URL, available CSV files in cwd + `tasks/` subdir, proxy count + filename, whether user / raffle webhooks are configured, monitor mode flag, QT mode flag. A glance at the embed tells you the bot is configured the way you intended.
+- **Admin download from admin panel** — clicking "Download Bot" in the admin sidebar now works even when the operator is logged in via Discord OAuth (previously only license-key dashboard sessions could download). The admin session token is forwarded as a `?t=` query param.
+
+## v2.1.19 — Operator-channel lifecycle embeds + Discord OAuth admin
+
+- **Operator-channel lifecycle embeds** — bot lifecycle events (`cli_started`, `cli_stopped`, `batch_started`, `batch_finished`) now route to the ops Discord webhook (`HOP_OPS_SPAM_WEBHOOK`) in addition to the admin dashboard. Public success webhook (`HOP_PUBLIC_WEBHOOK_URL`) stays clean — it only fires for `checkout_success`.
+- **Webhook routing crystallised:**
+  - `checkout_success` → public webhook (anon, success-only) **and** user's configured `webhook_url` (full payload).
+  - `cli_*` / `batch_*` / `ops` → ops spam webhook (operator visibility).
+  - Failures → **never** webhook'd anywhere. Period.
+- **Discord OAuth admin sign-in** — admin panel at `bohmannm.com/HopAIO Admin.html` now uses Discord OAuth instead of a static token. Requires `DISCORD_CLIENT_ID`, `DISCORD_CLIENT_SECRET`, and `ADMIN_EMAIL` env vars on the server.
+
+## v2.1.18 — Events pipeline rewrite + Mediaexpert COD / in-store pickup
+
+- **Central event endpoint** — all CLI telemetry (start, heartbeat, batch start/end, checkout success, ops alerts) now flows through one POST to `/v1/events` on the license server instead of fanning out to multiple Discord webhooks from the bot. The server persists every event to SQLite + admin dashboard, then routes the lifecycle / success / ops subsets to their respective Discord channels.
+  - One summary embed at batch start + one at batch end (no more per-task embeds spamming the channel).
+  - Preloads count as tasks — preload prints unified `START` → "Preload finished" → normal OOS prints.
+  - Each CLI run gets a `session_id`; license_key is written in to every envelope so the admin dashboard routes correctly.
+  - File-backed buffer (`dashboard/data/events_buffer.jsonl`, 5000-line cap) drains on next successful POST when the server is unreachable.
+- **Live Sessions tab** in the admin panel — every running bot shows with status pill (online / offline / stopped), version, machine id, active-tasks counter. Auto-refreshes every 8 s.
+- **Events Feed tab** in the admin panel — chronological feed of every event with type filter chips, search box, color-coded rows.
+- **Mediaexpert COD (Cash on Delivery)** — set `card_number=cod` in the CSV row. Bot uses `payment_id=41` (Gotówka przy odbiorze, courier delivery — pay the driver in cash on delivery).
+- **Mediaexpert in-store pickup** — two flavors via `card_number`:
+  - `instore` — "Odbiór w sklepie", pay in cash at register.
+  - `instorecod` — pickup, pay by card at register.
+  Bot auto-selects the nearest store for the CSV `postal_code` via `/api/pos/list/search_nearest_by_cart`. Override with `config.json` → `mediaexpert_default_pos_id` (or env `HOP_ME_DEFAULT_POS_ID`); per-task override via the `discount` CSV column.
+- **Mediaexpert payment ID discovery** — full `payment_id` table mapped via brute-force probe: 41 COD, 45 BLIK, 61 Card (Tpay), 529 ApplePay, 538 GPay. Documented for future module work.
+- **Preload pool-collision fix** — `real_target_id` is now filtered from the OOS preload pool before `random.choice` picks a dummy, so the bot never adds the same SKU twice and trips `Maksymalna ilość produktów w koszyku` at remove time.
 
 ## v2.1.7 — Swatch new module (Adyen CC + PayPal)
 

@@ -52,6 +52,26 @@ Optional on `mode=buy`:
 | `sizes` | `M,L,XL` | Preferred sizes, first available wins. Empty = random. |
 | `country_code` | `CZ` | Used when URL doesn't imply a region. |
 
+## Payment selection (`card_number`)
+
+Most sites read card details from the `card_number` / `expiry` / `cvv` columns. A few sites support alternative payment methods by overloading the `card_number` column with a keyword instead of a real PAN:
+
+| `card_number` value | Effect | Sites that support it |
+|---|---|---|
+| `4111…` (real PAN) | Standard card checkout | All card-supporting sites |
+| `gpay` / `googlepay` | Google Pay handoff (URL in webhook) | Mediaexpert |
+| `cod` / `pobranie` / `zapobraniem` / `cashondelivery` | Cash on Delivery — courier brings goods, you pay in cash on arrival | Mediaexpert, Footshop |
+| `instore` / `odbior` / `pickup` | Pickup at physical store, pay in cash at register | Mediaexpert |
+| `instorecod` / `instorecard` | Pickup at physical store, pay by card at register | Mediaexpert |
+
+When using `instore` / `instorecod`, the bot resolves the nearest store by the CSV `postal_code` automatically. To pin a specific store, fill in either:
+
+- `discount` CSV column → integer POS id (per-task override)
+- `config.json` → `mediaexpert_default_pos_id` (global default for that site)
+- env `HOP_ME_DEFAULT_POS_ID` (CI / one-shot override)
+
+The bot looks them up in that order; first match wins, automatic nearest-store search is the fallback.
+
 ## Delimiter
 
 Semicolons are preferred — many product URLs contain commas. The loader auto-detects: if the header has a `;`, it splits on `;`.
