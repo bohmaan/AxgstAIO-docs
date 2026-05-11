@@ -2,8 +2,9 @@
 
 What changed in each release. For the raw commit log, see the [GitHub releases](https://github.com/bohmaan/HopAIO/releases).
 
-## v2.1.21 — Remote kill from admin dashboard
+## v2.1.21 — Remote kill from admin dashboard + checkout-emit fix
 
+- **`checkout_success` event now decoupled from the local file log** — the emit lived inside the same try/except as `checkout_log.record(...)`, sequenced *after* the file write. A disk-full / permission failure on the local JSON log silently swallowed the server telemetry too — public webhook, admin dashboard, and user dashboard would all stay blank for that order. Emit now runs in its own try/except *before* the file write so the two paths can't poison each other.
 - **Kill button per live session** — admin panel → Live Sessions tab now has a Kill action next to each online session. Clicking it sets a `kill_requested` flag on the server; the bot's next heartbeat reads `{"kill": true}` in the response, fires a `cli_stopped` event with `reason=killed_by_admin`, drains the queue, then `os._exit(0)`. Worst-case latency to actual exit: heartbeat interval (10 s) + 2 s queue drain ≈ **12 s**.
 - **`POST /v1/admin/sessions/{id}/kill`** — new admin-gated endpoint. 404 when session doesn't exist; idempotent on already-killed/stopped rows. Fires an amber `CLI kill requested` embed to the ops Discord webhook so the action is audit-logged.
 - **Session row carries `kill_requested` + `status='killing'`** during the window between admin click and bot acknowledging. Button disables and shows "killing…" so a second click can't enqueue a stale signal.
