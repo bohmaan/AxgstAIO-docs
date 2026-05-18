@@ -67,6 +67,7 @@ export default defineConfig({
             { text: 'MyComics', link: '/sites/mycomics' },
             { text: 'Proshop', link: '/sites/proshop' },
             { text: 'Skatedeluxe', link: '/sites/skatedeluxe' },
+            { text: 'Secret Lair', link: '/sites/secretlair' },
             { text: 'SK Store / WSS', link: '/sites/skstore' },
             { text: 'Solebox', link: '/sites/solebox' },
             { text: 'SportsShoes', link: '/sites/sportsshoes' },

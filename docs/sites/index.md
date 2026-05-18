@@ -20,4 +20,5 @@
 | [Frasers (Sports Direct, GAME UK, Flannels...)](/sites/frasers) | `game` / `sportsdirect` / `flannels` / `studio` / `houseoffraser` / `usc` / `everlast` | UK / EU | ✅ | — |
 | [SK Store / WSS](/sites/skstore) | `skstore` | PL / EU | ✅ | — |
 | [Zalando](/sites/zalando) | `zalando` / `zal` | EU | ✅ | — |
+| [Secret Lair](/sites/secretlair) | `secretlair` / `sl` | EU | PayPal hold | ✅ |
 | [Queue-it (generic)](/sites/queueit) | `queueit` / `qit` | any | pass-only | — |

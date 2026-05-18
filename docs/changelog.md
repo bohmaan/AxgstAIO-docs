@@ -2,6 +2,27 @@
 
 What changed in each release. For the raw commit log, see the [GitHub releases](https://github.com/bohmaan/HopAIO/releases).
 
+## v2.1.22 — Secret Lair module + webhook / spoiler fixes
+
+- **[Secret Lair](/sites/secretlair) — new site** (`secretlair` / `sl`,
+  `secretlair.wizards.com`). Scalefast "Pepita" platform, pure HTTP.
+  Modes **`register`** and **`login`** (no guest). PayPal is a *cart
+  hold*, not a card charge — the bot rides Queue-it automatically, builds
+  the cart, and sends the **PayPal approval link to your webhook**. No
+  browser, no card, no 3DS handled by the bot. Intermittent CloudFront
+  `403`s are absorbed by automatic TLS-fingerprint reroll → direct
+  fallback.
+- **Webhook de-duplication** — a `checkout_success` was being delivered
+  to your private webhook **twice** (once direct, once re-dispatched by
+  the server). Now exactly **one** private webhook (full payload) plus
+  the public success webhook. Footer is consistent across both.
+- **Discord spoiler fix** — the account email in the success embed now
+  renders as a real hidden spoiler (`||email||`) instead of leaking the
+  raw address; the embed sanitiser no longer defangs the spoiler bars.
+- Also added a low-key CZ WooCommerce target,
+  [Dragon World](/sites/dragonworld) (`dragonworld` / `dw`) — guest buy,
+  GP Webpay pay link forwarded to webhook, PPL home delivery.
+
 ## v2.1.21 — Remote kill from admin dashboard + checkout-emit fix
 
 - **`checkout_success` event now decoupled from the local file log** — the emit lived inside the same try/except as `checkout_log.record(...)`, sequenced *after* the file write. A disk-full / permission failure on the local JSON log silently swallowed the server telemetry too — public webhook, admin dashboard, and user dashboard would all stay blank for that order. Emit now runs in its own try/except *before* the file write so the two paths can't poison each other.
