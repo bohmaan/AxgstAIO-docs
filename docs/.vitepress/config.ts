@@ -68,6 +68,7 @@ export default defineConfig({
             { text: 'Proshop', link: '/sites/proshop' },
             { text: 'Skatedeluxe', link: '/sites/skatedeluxe' },
             { text: 'Secret Lair', link: '/sites/secretlair' },
+            { text: 'Xzone (CZ / PL / DE / SK)', link: '/sites/xzone' },
             { text: 'SK Store / WSS', link: '/sites/skstore' },
             { text: 'Solebox', link: '/sites/solebox' },
             { text: 'SportsShoes', link: '/sites/sportsshoes' },

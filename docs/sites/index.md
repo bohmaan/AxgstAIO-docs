@@ -21,4 +21,5 @@
 | [SK Store / WSS](/sites/skstore) | `skstore` | PL / EU | ✅ | — |
 | [Zalando](/sites/zalando) | `zalando` / `zal` | EU | ✅ | — |
 | [Secret Lair](/sites/secretlair) | `secretlair` / `sl` | EU | PayPal hold | ✅ |
+| [Xzone](/sites/xzone) | `xzone` / `xz` / `xzone.pl` / `xzone.de` / `xzone.sk` | CZ / PL / DE / SK | ✅ | — |
 | [Queue-it (generic)](/sites/queueit) | `queueit` / `qit` | any | pass-only | — |

@@ -1,0 +1,3 @@
+site;url;mode;qty;sizes;max_price;delay_sec;email;password;discount;first_name;last_name;phone;street;building_number;city;postal_code;state;country_code;card_number;card_exp;card_cvv
+xzone.cz;https://www.xzone.cz/example-product;buy;1;;3000;3;you@example.com;;;Jan;Novak;+420777123456;Václavské náměstí;1;Praha;11000;;CZ;;;
+xzone.pl;https://www.xzone.pl/example-product;buy;1;;3000;3;you@example.com;;;Jan;Kowalski;+48600000000;Marszałkowska;1;Warszawa;00-001;;PL;;;

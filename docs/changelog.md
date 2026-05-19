@@ -2,6 +2,32 @@
 
 What changed in each release. For the raw commit log, see the [GitHub releases](https://github.com/bohmaan/HopAIO/releases).
 
+## v2.1.23 — Xzone (CZ/PL/DE/SK) + Secret Lair PayPal fix
+
+- **[Xzone](/sites/xzone) — new site** (`xzone` / `xz`, plus
+  `xzone.pl` / `xzone.de` / `xzone.sk`). One pure-HTTP guest-checkout
+  module for the custom xzone shop across all four localized domains —
+  pick the store via the `site` column. Adds to cart → shipping +
+  payment → guest address → places the order, then **forwards the
+  hosted payment link to your webhook** (never touches the card form).
+  Gateway-agnostic: it follows the order's redirect chain and forwards
+  whatever the store routes to — ČSOB on `.cz`
+  (`platebnibrana.csob.cz/pay/…`), GoPay / GP webpay / P24 on the other
+  domains. Shipping/payment ids differ per domain and are auto-detected;
+  `shipping_method` / `payment_method` columns override. COD / store /
+  preorder → order placed with no online-pay link.
+- **Secret Lair — PayPal flow corrected.** The approval link is now
+  minted via Braintree `create_payment_resource` (one-time checkout,
+  real `paypal.com/checkoutnow?token=EC-…`) instead of
+  `setup_billing_agreement` (which produced a wrong `ba_token`
+  billing-agreement link). The webhook now carries a usable PayPal pay
+  link.
+- **Secret Lair — auth hardening.** Restores a cached session first,
+  then logs in; if neither works it hard-stops (no guest fallback).
+  `register` mode now only provisions the account and stops (no buy
+  flow). Intermittent CloudFront 403s on a flagged proxy IP go direct
+  instead of pointlessly rerolling the TLS fingerprint.
+
 ## v2.1.22 — Secret Lair module + webhook / spoiler fixes
 
 - **[Secret Lair](/sites/secretlair) — new site** (`secretlair` / `sl`,
