@@ -2,6 +2,26 @@
 
 What changed in each release. For the raw commit log, see the [GitHub releases](https://github.com/bohmaan/HopAIO/releases).
 
+## v2.8.8 — END. Clothing module shipped (full Adyen 3DS2 + auto-open challenge in Chrome)
+
+- **`endclothing.com` (END.)** — brand-new pure-HTTP module: Magento 2 V2 REST + Adyen Web Components 5.x card encryption + Akamai Bot Manager. 4 modes (`buy` / `preload` / `register` / `login`). Hot commit ~5–6 s end-to-end through residential CZ proxy.
+- **Full Adyen 3DS2 dance** — after `/payment-information` returns bare `orderId`, bot POSTs `/eu/rest/V1/adyen/orders/carts/mine/payment-status` with `{orderId: <int>}` to fetch the Adyen state (resultCode + action + paymentData). Drives `IdentifyShopper` → ACS fingerprint POST → `/eu/rest/V1/adyen/carts/mine/payments-details` → `ChallengeShopper`. Endpoint paths reverse-engineered from END's SPA `_app` chunk (`x` var = payments-details, `k` var = payment-status).
+- **3DS challenge auto-opens in default browser** — when Adyen returns `ChallengeShopper`, bot decodes `action.token` → extracts `acsURL` + `acsTransID` + `messageVersion` + `threeDSServerTransID`, builds a CReq blob, writes an auto-submitting HTML form to a temp file, and `webbrowser.open()`s it. User completes SCA (SMS / biometric / app) in the bank's challenge page; ACS POSTs CRes back, Magento finalises the order, card is actually charged.
+- **Fake-OOS handling** — Magento dedupes ATC by `(SKU + configurable_item_options)`, so re-ATCing the same target after a failed run reuses the phantom `item_id` with stale stock reservations. Symptom: `/payment-information` returns HTTP 200 + `{"message":"Some of the products are out of stock."}`. Fix: `end_purge_cart_items` runs at warmup start, deletes every existing quote item before the snipe builds the cart.
+- **Infinite OOS retry** — hot commit loops indefinitely on ATC OOS with a 0.5 s backoff between empty passes; every 5 empty passes re-resolves the PDP to pick up freshly restocked variants. Walks the variant pool inside `_try_atc_with_candidates` and inside an outer fake-OOS retry that DELETEs the poisoned line + tries the next variant + retries `/payment-information`.
+- **Warmup parallelization** — Adyen pubkey fetch + payment body pre-build run in a background thread alongside the Hyper Akamai solve (different host, no shared cookies). After Hyper, `_resolve_sku_and_variants` + `_resolve_dummy` + `_post_solve_warmup` run in a `ThreadPoolExecutor(max_workers=3)`. Net: ~2 s off warmup.
+- **DNS + TCP + TLS pre-warm to `api2.endclothing.com`** before login (cheap GET `/rest/V1/end/countries/`). Caches the warm H2 connection in `curl_cffi`'s session pool so login + cart-get + every hot api2 call skips the handshake. ~300–700 ms saved on residential proxies.
+- **Payment body pre-built in warmup** — RSA-OAEP + JWE × 4 fields (card number, expiry month, expiry year, CVV) encrypted once, full `payment-information` body JSON cached on `session._cached_payment_body_json`. Hot `end_place_order` POSTs the cached string verbatim via new `api_store(raw_body=...)` path. ~50–150 ms crypto + 0–500 ms Adyen pubkey RTT off the hot critical path.
+- **`?estimate=true` dropped on hot ATC** — query param triggers Magento's inline shipping + tax recalc server-side; skipped now because shipping is already cached from warmup. ~500–1000 ms server-side win.
+- **Three URL prefix families** — END's Magento has custom rewrites:
+  - `/rest/V1/...` (public — register, login, countries)
+  - `/eu/rest/V1/...` (store-scoped — cart, shipping, payment)
+  - `/rest/eu/V1/...` (customer-scoped — `customers/me`)
+- **Webhook `mode` always = `task.mode`** — `send_webhook` calls in `endclothing.do_end_preload` and `endclothing.do_end_buy` no longer override `mode` to `"3DS"` / `"paid"`. Defaults to operator's CSV-row mode per the 2026-05-24 launcher fix.
+- **Log cleanup** — Egress IP, DNS pre-warm, Hyper iteration messages, cart purge counter, payment pre-build size dump, dummy resolved / removed, shipping pre-warmed, all `Placing order:` step echoes, inner ATC / Pay timing duplicates, `[HOT 1/2]` / `[HOT 2/2]` headers, 3DS2 hop diagnostics, `Re-resolving PDP`, `Contacting bank gateway` step echoes all removed. Hot run prints ~10 lines total (down from ~25).
+- **Short `IP flagged` print on Akamai 416 / 403** — instead of dumping the multi-line HTML body, ATC failed now reads `(HTTP 416: IP flagged)`. Generic failures strip newlines so multi-line HTML collapses to a single readable line.
+- **Hyper Solutions SDK whitelist** — `endclothing.com` is on the bot's Akamai sensor plan (verified 2026-05-26 first run). 1 Hyper credit per task, ~3 iterations until `_abck` threshold flips –1 → 0.
+
 ## v2.1.23 — Xzone (CZ/PL/DE/SK) + Secret Lair PayPal fix
 
 - **[Xzone](/sites/xzone) — new site** (`xzone` / `xz`, plus
