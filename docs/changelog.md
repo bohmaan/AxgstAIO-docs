@@ -2,6 +2,11 @@
 
 What changed in each release. For the raw commit log, see the [GitHub releases](https://github.com/bohmaan/HopAIO/releases).
 
+## v2.8.9 — END. Clothing size range + restock log polish
+
+- **Size column accepts ranges.** `sizes=11-12` expands to `11, 11.5, 12` (half-sizes included), random pick order. Comma-list (`10,11,14`) and mixed (`10,11-12,14`) supported. Strict by default — if none of the requested sizes are in stock, the bot parks on restock polling instead of falling back to other sizes. Leave the column empty for full-random pick across all variants. `HOP_END_STRICT_SIZES` env removed (no longer needed).
+- **Restock poll prints every retry.** Heartbeat gating removed — every `Restock poll #N` line is logged, matching the "log every retry" rule applied to ATC and the other END steps.
+
 ## v2.8.8 — END. Clothing module shipped (full Adyen 3DS2 + auto-open challenge in Chrome)
 
 - **`endclothing.com` (END.)** — brand-new pure-HTTP module: Magento 2 V2 REST + Adyen Web Components 5.x card encryption + Akamai Bot Manager. 4 modes (`buy` / `preload` / `register` / `login`). Hot commit ~5–6 s end-to-end through residential CZ proxy.
