@@ -2,7 +2,7 @@
 
 All supported shops and the modes each module accepts. Set the shop via the
 **`site`** column value (any alias works) and the flow via the **`mode`** column
-(CSV `mode` field; blank = `buy`).
+(CSV `mode` field; blank = `buy`). Click a site for its CSV row example.
 
 ## Mode legend
 
@@ -25,24 +25,24 @@ All supported shops and the modes each module accepts. Set the shop via the
 |------|-------|--------|-------|
 | [Mediaexpert](/sites/mediaexpert) | `mediaexpert` / `me` | PL | buy · register · login · preload |
 | [Empik](/sites/empik) | `empik` | PL | buy · register · pay · cancel · force · app |
-| Gnom-Sklep | `gnomsklep` / `gnom` / `gnom-sklep.pl` | PL | buy (InPost Kurier + card/IdoPay) |
-| **Tantis** | `tantis` / `tantis.pl` | PL + EU lockers | buy (InPost Kurier) · **pickup** (InPost Paczkomat; **InPost International** IT/ES/FR/BE/LU/NL/PT) |
-| DiablesTCG | `diablestcg` / `diablestcg.pl` | PL / IT | buy (Shoper JSON API, card via Autopay) |
-| Mag Planszowy | `magplanszowy` / `magplan` | PL | buy · pickup (InPost Kurier / Paczkomat) |
-| Shoper (generic) | `shoper` | PL (any Shoper shop) | buy · pickup (locker / paczkomat) |
+| [Gnom-Sklep](/sites/gnomsklep) | `gnomsklep` / `gnom` | PL | buy |
+| [Tantis](/sites/tantis) | `tantis` | PL + EU lockers | buy · pickup |
+| [DiablesTCG](/sites/diablestcg) | `diablestcg` | PL / IT | buy |
+| [Mag Planszowy](/sites/magplanszowy) | `magplanszowy` / `magplan` | PL | buy · pickup |
+| [Shoper (generic)](/sites/shoper) | `shoper` | PL (any Shoper shop) | buy · pickup |
 | [SK Store / WSS](/sites/skstore) | `skstore` / `sk` / `wss` | PL / EU | buy |
 
 ## Netherlands / Toys 🇳🇱
 
 | Site | Codes | Region | Modes |
 |------|-------|--------|-------|
-| Dreamland | `dreamland` / `dl` | NL / BE | buy · preload |
-| Top1Toys | `top1toys` / `t1t` | NL | buy · preload |
-| Intertoys | `intertoys` / `it` | NL | buy · preload |
-| MediaMarkt | `mediamarkt` / `mm` | NL | buy · register · login · preload |
-| MediaMarkt DE | `mediamarkt.de` / `mmde` | DE | buy · register · login · preload |
+| [Dreamland](/sites/dreamland) | `dreamland` / `dl` | NL / BE | buy · preload |
+| [Top1Toys](/sites/top1toys) | `top1toys` / `t1t` | NL | buy · preload |
+| [Intertoys](/sites/intertoys) | `intertoys` / `it` | NL | buy · preload |
+| [MediaMarkt](/sites/mediamarkt) | `mediamarkt` / `mm` | NL | buy · register · login · preload |
+| [MediaMarkt DE](/sites/mediamarktde) | `mediamarkt.de` / `mmde` | DE | buy · register · login · preload |
 
-## Germany / EU sneakers & lifestyle 🇩🇪
+## Germany / EU 🇩🇪
 
 | Site | Codes | Region | Modes |
 |------|-------|--------|-------|
@@ -50,9 +50,9 @@ All supported shops and the modes each module accepts. Set the shop via the
 | [Skatedeluxe](/sites/skatedeluxe) | `skatedeluxe` / `sd` | DE / EU | buy · register |
 | [Footshop](/sites/footshop) | `footshop` / `fs` | CZ / EU | buy · register · pickup |
 | [Games Island](/sites/gamesisland) | `gamesisland` / `gi` | DE / EU | buy · register · login |
-| Boozt | `boozt` / `boozt.com` / `boozt.de` | DE / EU / CZ / IT | buy · preload |
-| Top4Running | `top4running` / `t4r` / `top4` | DE / EU | buy · register · preload |
-| All4Running | `all4running` / `a4r` / `21run` | NL / EU | buy · preload |
+| [Boozt](/sites/boozt) | `boozt` | DE / EU / CZ / IT | buy · preload |
+| [Top4Running](/sites/top4running) | `top4running` / `t4r` | DE / EU | buy · register · preload |
+| [All4Running](/sites/all4running) | `all4running` / `a4r` / `21run` | NL / EU | buy · preload |
 
 ## Italy 🇮🇹
 
@@ -75,7 +75,6 @@ All supported shops and the modes each module accepts. Set the shop via the
 | [Alza](/sites/alza) | `alza` / `alza.cz` / `alza.de` / `alza.at` / `alza.hu` | CZ / DE / AT / HU | buy |
 | [Sportvision](/sites/sportvision) | `sportvision` / `sv` | CZ | buy |
 | [Xzone](/sites/xzone) | `xzone` / `xz` | CZ / PL / DE / SK | buy |
-| [Zalando](/sites/zalando) | `zalando` / `zal` | EU | buy · register |
 
 ## UK / EU 🇬🇧
 
@@ -89,19 +88,19 @@ All supported shops and the modes each module accepts. Set the shop via the
 
 | Site | Codes | Region | Modes |
 |------|-------|--------|-------|
-| Reflexshop | `reflexshop` / `rs` | HU | buy · register |
-| Cardverse | `cardverse` / `cv` | HU | buy |
-| RAM Cards | `ramcards` / `rc` | RO | buy (EasyPay pay link) |
-| CR7 Museum Store | `cr7` | EU | buy (EasyPay pay link) |
-| Dragon World | `dragonworld` / `dw` / `dragon-world.store` | EU | buy |
-| [Secret Lair](/sites/secretlair) | `secretlair` / `sl` | EU | buy (PayPal hold) · register |
+| [Reflexshop](/sites/reflexshop) | `reflexshop` / `rs` | HU | buy · register |
+| [Cardverse](/sites/cardverse) | `cardverse` / `cv` | HU | buy |
+| [RAM Cards](/sites/ramcards) | `ramcards` / `rc` | RO | buy |
+| [CR7 Museum Store](/sites/cr7) | `cr7` | EU | buy |
+| [Dragon World](/sites/dragonworld) | `dragonworld` / `dw` | EU | buy |
+| [Secret Lair](/sites/secretlair) | `secretlair` / `sl` | EU | buy · register |
 
 ## Generic platforms
 
 | Platform | Codes | Region | Modes |
 |----------|-------|--------|-------|
-| Shoper (any PL Shoper shop) | `shoper` | PL | buy · pickup |
-| MerchantPro (e.g. thepokemania) | `merchantpro` / `thepokemania` | RO / EU | buy (Netopia pay link) |
+| [Shoper (any PL Shoper shop)](/sites/shoper) | `shoper` | PL | buy · pickup |
+| [MerchantPro (e.g. thepokemania)](/sites/merchantpro) | `merchantpro` / `thepokemania` | RO / EU | buy |
 | [Queue-it (generic)](/sites/queueit) | `queueit` / `qit` | any | pass |
 
 ::: tip Pickup / locker shops
