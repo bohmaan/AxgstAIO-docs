@@ -106,5 +106,5 @@ All supported shops and the modes each module accepts. Set the shop via the
 ::: tip Pickup / locker shops
 For locker delivery put the pickup-point code in the **`discount`** column
 (e.g. Tantis: `SVA01M` for a PL InPost Paczkomat, or `ITFAN043743D` for an
-InPost International locker in Fano, Italy — the brand/shipping is auto-detected).
+InPost International locker.
 :::
